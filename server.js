@@ -236,8 +236,3 @@ app.get("/learn", (req, res) => { res.sendFile(path.join(__dirname, "public", "l
 app.use((req, res) => {
   res.status(404).send("❌ Page not found");
 });
-
-
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
