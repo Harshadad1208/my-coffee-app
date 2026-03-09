@@ -248,3 +248,10 @@ app.get("/learn", (req, res) => { res.sendFile(path.join(__dirname, "public", "l
 app.use((req, res) => {
   res.status(404).send("❌ Page not found");
 });
+
+// Remove 'const' here because it is already defined on Line 7
+PORT = process.env.PORT || 10000; 
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ Server is officially live on port ${PORT}`);
+});
