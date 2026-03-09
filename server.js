@@ -30,8 +30,7 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
     if (err) {
-        console.log('⚠️ Running in menu-only mode (No DB)');
-        // We removed process.exit(1) so the site stays alive!
+        console.error('❌ Database connection failed:', err);
     } else {
         console.log('✅ Connected to MySQL Database');
     }
