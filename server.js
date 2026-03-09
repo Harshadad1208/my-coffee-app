@@ -21,6 +21,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 
+
+
+
+
+
+
+
+
+
+
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -32,15 +42,40 @@ const db = mysql.createConnection({
   }
 });
 
+// This function creates your tables automatically
+const initDB = () => {
+    const queries = [
+        `CREATE TABLE IF NOT EXISTS cart_items (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DECIMAL(10,2) NOT NULL)`,
+        `CREATE TABLE IF NOT EXISTS orders (order_id INT AUTO_INCREMENT PRIMARY KEY, customer_name VARCHAR(255) NOT NULL, phone VARCHAR(20) NOT NULL, table_number VARCHAR(10), total_amount DECIMAL(10,2), order_status VARCHAR(50) DEFAULT 'received', order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`,
+        `CREATE TABLE IF NOT EXISTS order_items (id INT AUTO_INCREMENT PRIMARY KEY, order_id INT, item_name VARCHAR(255), price DECIMAL(10,2), FOREIGN KEY (order_id) REFERENCES orders(order_id))`
+    ];
 
+    queries.forEach(query => {
+        db.query(query, (err) => {
+            if (err) console.error("❌ Table error:", err);
+            else console.log("✅ Table checked/ready");
+        });
+    });
+};
 
 db.connect((err) => {
     if (err) {
         console.error('❌ Database connection failed:', err);
     } else {
         console.log('✅ Connected to MySQL Database');
+        initDB(); // This starts the table creation
     }
 });
+
+
+
+
+
+
+
+
+
+
 
 
 
