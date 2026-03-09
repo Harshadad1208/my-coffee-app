@@ -4,8 +4,7 @@ const cors = require("cors");
 const path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT || 10000;
 ///////////////////////////////////////////////////////////
 // MIDDLEWARE
 ///////////////////////////////////////////////////////////
@@ -250,7 +249,6 @@ app.use((req, res) => {
 });
 
 
-PORT = process.env.PORT || 10000; 
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`✅ Server is officially live on port ${PORT}`);
