@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Coffee Corner - Power Picks</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Coffee Corner</div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="bestseller.html">Bestseller</a></li>
+      <li><a href="drinks.html">Drinks</a></li>
+      <li><a href="food.html">Food</a></li>
+      <li><a href="power-picks.html">Power Picks</a></li>
+      <li><a href="coffee-home.html">Coffee at Home</a></li>
+      <li><a href="ready-to-eat.html">Ready to Eat</a></li>
+    </ul>
+
+    <div class="search-profile">
+      <input type="text" placeholder="Looking for something specific?">
+      <span class="profile-icon">👤</span>
+
+      <div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">
+        🛒 <span id="cart-count">0</span>
+      </div>
+
+    </div>
+  </nav>
+
+
+  <!-- POWER PICKS MENU -->
+
+  <section class="menu-section">
+
+    <h2>Power Picks</h2>
+    <p class="subtitle">High protein and energy boosting coffee picks.</p>
+
+    <div class="menu-grid">
+
+
+      <!-- ITEM 1 -->
+
+      <div class="menu-card" data-name="Tall Iced Caramel Latte Unsweetened" data-price="320">
+
+        <div class="image-box">
+          <img src="images/iced-caramel-latte.jpg">
+        </div>
+
+        <div class="card-content">
+
+          <h3>Tall Iced Caramel Latte Unsweetened</h3>
+
+          <p class="desc">
+            Smooth espresso blended with chilled milk and caramel flavor.
+          </p>
+
+          <p class="price">₹ 320.00</p>
+
+          <button class="btn add-to-cart">
+            Add Item
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ITEM 2 -->
+
+      <div class="menu-card" data-name="Tall Cold Brew with Chocolate Protein Foam" data-price="350">
+
+        <div class="image-box">
+          <img src="images/coldbrew-protein.jpg">
+        </div>
+
+        <div class="card-content">
+
+          <h3>Tall Cold Brew with Chocolate Protein Foam</h3>
+
+          <p class="desc">
+            Bold cold brew topped with creamy chocolate protein foam.
+          </p>
+
+          <p class="price">₹ 350.00</p>
+
+          <button class="btn add-to-cart">
+            Add Item
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ITEM 3 -->
+
+      <div class="menu-card" data-name="Tall Iced Vanilla Latte with Vanilla Protein Foam" data-price="340">
+
+        <div class="image-box">
+          <img src="images/iced-vanilla-latte.jpg">
+        </div>
+
+        <div class="card-content">
+
+          <h3>Tall Iced Vanilla Latte with Vanilla Protein Foam</h3>
+
+          <p class="desc">
+            Iced vanilla latte finished with smooth vanilla protein foam.
+          </p>
+
+          <p class="price">₹ 340.00</p>
+
+          <button class="btn add-to-cart">
+            Add Item
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ITEM 4 -->
+
+      <div class="menu-card" data-name="Short Hazelnut Flat White Unsweetened" data-price="300">
+
+        <div class="image-box">
+          <img src="images/hazelnut-flatwhite.jpg">
+        </div>
+
+        <div class="card-content">
+
+          <h3>Short Hazelnut Flat White Unsweetened</h3>
+
+          <p class="desc">
+            Rich espresso with velvety milk and subtle hazelnut flavor.
+          </p>
+
+          <p class="price">₹ 300.00</p>
+
+          <button class="btn add-to-cart">
+            Add Item
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- FOOTER -->
+
+  <footer>
+    <p>
+      An average active adult requires 2,000 kcal energy per day,
+      however calorie needs may vary.
+    </p>
+  </footer>
+
+
+  <div id="notification" class="notification"></div>
+
+  <script src="cart.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Coffee Corner - Home</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+
+
+
+<!-- NAVBAR -->
+<nav class="navbar">
+
+<div class="logo">Coffee Corner</div>
+
+<ul class="nav-links">
+<li><a href="index.html" class="active">Home</a></li>
+<li><a href="bestseller.html">Bestseller</a></li>
+<li><a href="drinks.html">Drinks</a></li>
+<li><a href="food.html">Food</a></li>
+<li><a href="coffee-home.html">Coffee at Home</a></li>
+<li><a href="ready-to-eat.html">Ready to Eat</a></li>
+
+
+</ul>
+
+<div class="search-profile">
+
+<input type="text" placeholder="Looking for something specific?">
+
+<span class="profile-icon">👤</span>
+
+<!-- KITCHEN BUTTON -->
+<button class="kitchen-btn" onclick="window.location.href='admin-login.html'">
+👨‍🍳 Kitchen
+</button>
+
+<!-- CART ICON -->
+<div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">
+🛒 <span id="cart-count">0</span>
+</div>
+
+</div>
+
+</nav>
+
+
+<!-- HERO BANNER -->
+
+
+
+
+
+
+<section class="banner">
+
+<div class="banner-text">
+<h2>Experience the Best Coffee, Every Day!</h2>
+<p>Indulge in our finest brews and handcrafted drinks made just for you.</p>
+<a href="full-menu.html" class="btn">Order Now</a>
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- CATEGORIES -->
+<section class="categories">
+
+<h2>Handcrafted Curations</h2>
+
+<div class="category-grid">
+
+<!-- Bestseller -->
+<a href="bestseller.html" class="category">
+<img src="images/bestseller.jpg" alt="Bestseller" class="category-img">
+<p>Bestseller</p>
+</a>
+
+<!-- Drinks -->
+<a href="drinks.html" class="category">
+<img src="images/drinks.jpg" alt="Drinks" class="category-img">
+<p>Drinks</p>
+</a>
+
+<!-- Food -->
+<a href="food.html" class="category">
+<img src="images/food.jpg" alt="Food" class="category-img">
+<p>Food</p>
+</a>
+
+<!-- Power Picks -->
+<a href="power-picks.html" class="category">
+<img src="images/power-picks.jpg" class="category-img">
+<p>Power Picks</p>
+</a>
+
+<!-- Coffee At Home -->
+<a href="coffee-home.html" class="category">
+<img src="images/coffee-home.jpg" alt="Coffee At Home" class="category-img">
+<p>Coffee At Home</p>
+</a>
+
+<!-- Ready To Eat -->
+<a href="ready-to-eat.html" class="category">
+<img src="images/ready.jpg" alt="Ready to Eat" class="category-img">
+<p>Ready to Eat</p>
+</a>
+
+</div>
+
+</section>
+
+
+<!-- COFFEE CULTURE -->
+<section class="coffee-culture">
+
+<div class="culture-text">
+<h2>Coffee Culture</h2>
+<p>Master the art & science of brewing with Coffee Corner.</p>
+
+
+
+<a href="learn.html" class="btn">Learn More</a>
+
+
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+<p>
+An average active adult requires 2,000 kcal energy per day, however calorie needs may vary.
+</p>
+
+<div class="footer-links">
+
+<div>
+<h4>About Us</h4>
+<ul>
+<li>Our Heritage</li>
+<li>Coffeehouse</li>
+<li>Our Company</li>
+</ul>
+</div>
+
+<div>
+<h4>Responsibility</h4>
+<ul>
+<li>Diversity</li>
+<li>Community</li>
+<li>Ethical Sourcing</li>
+</ul>
+</div>
+
+<div>
+<h4>Legal</h4>
+<ul>
+<li>Disclaimer</li>
+<li>Food Safety</li>
+<li>Nutritional Details</li>
+</ul>
+</div>
+
+<div>
+<h4>Quick Links</h4>
+<ul>
+<li>FAQs</li>
+<li>Customer Service</li>
+<li>Delivery</li>
+</ul>
+</div>
+
+</div>
+
+</footer>
+
+
+<div id="notification" class="notification"></div>
+
+<script src="cart.js"></script>
+
+</body>
+</html>

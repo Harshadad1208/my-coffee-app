@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Payment - Coffee Corner</title>
+
+<style>
+
+body{
+font-family: 'Segoe UI', sans-serif;
+margin:0;
+background:linear-gradient(135deg,#fff5ec,#ffe2c7);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+/* PAYMENT CARD */
+
+.payment-container{
+
+background:white;
+width:500px;
+padding:40px;
+border-radius:15px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+text-align:center;
+
+animation:fadeIn 0.7s ease;
+
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+h2{
+color:#4e342e;
+margin-bottom:25px;
+}
+
+/* PAYMENT OPTIONS */
+
+.payment-option{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px;
+margin-bottom:15px;
+border:2px solid #eee;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.payment-option:hover{
+border-color:#8d6e63;
+background:#fff7f1;
+}
+
+.payment-option input{
+margin-right:10px;
+}
+
+.payment-label{
+font-size:16px;
+font-weight:600;
+}
+
+/* UPI APPS */
+
+.upi-apps{
+display:none;
+margin-top:10px;
+text-align:left;
+padding-left:20px;
+}
+
+.upi-apps label{
+display:block;
+margin:6px 0;
+}
+
+/* PAY BUTTON */
+
+.pay-btn{
+
+margin-top:20px;
+background:#2e7d32;
+border:none;
+color:white;
+padding:15px;
+font-size:18px;
+width:100%;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+
+}
+
+.pay-btn:hover{
+background:#1b5e20;
+}
+
+/* SUCCESS POPUP */
+
+.success-popup{
+
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:40px;
+border-radius:15px;
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
+text-align:center;
+display:none;
+
+}
+
+.success-popup h3{
+color:#2e7d32;
+}
+
+.checkmark{
+
+font-size:60px;
+color:#2e7d32;
+animation:pop 0.5s ease;
+
+}
+
+@keyframes pop{
+0%{transform:scale(0);}
+100%{transform:scale(1);}
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<div class="payment-container">
+
+<h2>Choose Payment Method</h2>
+
+
+<!-- CARD PAYMENT -->
+
+<div class="payment-option">
+<label class="payment-label">
+<input type="radio" name="payment" value="card">
+💳 Card Payment
+</label>
+</div>
+
+
+<!-- UPI PAYMENT -->
+
+<div class="payment-option">
+
+<label class="payment-label">
+<input type="radio" name="payment" value="upi" id="upiOption">
+📱 UPI Payment
+</label>
+
+</div>
+
+<div class="upi-apps" id="upiApps">
+
+<label>
+<input type="radio" name="upiApp"> Google Pay
+</label>
+
+<label>
+<input type="radio" name="upiApp"> PhonePe
+</label>
+
+<label>
+<input type="radio" name="upiApp"> Paytm
+</label>
+
+</div>
+
+
+<!-- CASH PAYMENT -->
+
+<div class="payment-option">
+
+<label class="payment-label">
+<input type="radio" name="payment" value="cash">
+💵 Cash Payment
+</label>
+
+</div>
+
+
+<button class="pay-btn" onclick="makePayment()">
+Pay Now
+</button>
+
+</div>
+
+
+
+<!-- SUCCESS POPUP -->
+
+<div class="success-popup" id="successPopup">
+
+<div class="checkmark">✔</div>
+
+<h3>Payment Successful</h3>
+
+<p>Your order has been placed successfully.</p>
+
+</div>
+
+
+
+
+<script>
+
+document.getElementById("upiOption").addEventListener("change", () => {
+  document.getElementById("upiApps").style.display = "block";
+});
+
+async function makePayment(){
+
+  const selected = document.querySelector('input[name="payment"]:checked');
+
+  if(!selected){
+    alert("Please select payment method");
+    return;
+  }
+
+  const name = localStorage.getItem("customer_name");
+  const phone = localStorage.getItem("customer_phone");
+  const table = localStorage.getItem("table_number");
+
+  try{
+
+    const response = await fetch("/place-order",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        customer_name:name,
+        phone:phone,
+        table_number:table
+      })
+    });
+
+    const data = await response.json();
+
+    if(data.success){
+
+      // show popup
+      document.getElementById("successPopup").style.display="block";
+
+      // clear local storage
+      localStorage.removeItem("customer_name");
+      localStorage.removeItem("customer_phone");
+      localStorage.removeItem("table_number");
+
+      // redirect after 2 seconds
+      setTimeout(()=>{
+        window.location.href = "order-success.html";
+      },2000);
+
+    }else{
+
+      alert("Order failed. Please try again.");
+
+    }
+
+  }catch(error){
+
+    console.error("Payment Error:",error);
+    alert("Something went wrong");
+
+  }
+
+}
+
+</script>
+
+
+
+
+
+</body>
+</html>

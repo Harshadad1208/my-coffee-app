@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe Admin | Secure Login</title>
+    
+    <style>
+        :root {
+            --primary-coffee: #4e342e;
+            --accent-gold: #c9a27c;
+            --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #3e2723 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Ambient Background coffee beans effect */
+        body::before {
+            content: "☕";
+            position: absolute;
+            font-size: 400px;
+            opacity: 0.03;
+            top: -100px;
+            right: -100px;
+            transform: rotate(20deg);
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 50px 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            width: 380px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: #fff;
+            font-size: 28px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: var(--accent-gold);
+            font-size: 14px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #bbb;
+            font-size: 12px;
+            margin-left: 5px;
+            margin-bottom: 5px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .login-box input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(201, 162, 124, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-gold);
+            color: #3e2723;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background: #d4b494;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .error {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 20px;
+            display: none;
+            background: rgba(255, 107, 107, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .footer-text {
+            color: #666;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+    <div class="login-box">
+        <h2>Cafe Admin</h2>
+        <p class="subtitle">Secure Access Portal</p>
+
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
+        </div>
+
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+
+        <button class="login-btn" onclick="login()">Access Dashboard</button>
+
+        <p id="error" class="error">🔒 Access Denied. Check credentials.</p>
+
+        <p class="footer-text">&copy; 2026 Cafe Management System</p>
+    </div>
+</div>
+
+<script>
+    // Handle "Enter" key for login
+    document.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            login();
+        }
+    });
+
+    function login(){
+        let user = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+        let errorMsg = document.getElementById("error");
+
+        // Using your specific credentials
+        if(user.toLowerCase() === "harshada.deshmukh" && pass === "Harshu@2005"){
+            
+            // Add a small delay for a "loading" feel
+            const btn = document.querySelector('.login-btn');
+            btn.innerText = "Verifying...";
+            btn.style.opacity = "0.7";
+
+            setTimeout(() => {
+                localStorage.setItem("adminLoggedIn","true");
+                window.location.href = "kitchen.html";
+            }, 800);
+
+        } else {
+            errorMsg.style.display = "block";
+            // Auto-hide error after 3 seconds
+            setTimeout(() => {
+                errorMsg.style.display = "none";
+            }, 3000);
+        }
+    }
+</script>
+
+</body>
+</html>

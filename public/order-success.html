@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Order Successful - Coffee Corner</title>
+
+<style>
+
+body{
+font-family:'Segoe UI',sans-serif;
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#fff3e6,#ffe0c2,#ffd9b3);
+overflow:hidden;
+}
+
+/* CONFETTI */
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+background:red;
+top:-10px;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{
+transform:translateY(100vh) rotate(360deg);
+}
+}
+
+/* SUCCESS CARD */
+
+.success-card{
+
+background:white;
+padding:50px;
+border-radius:18px;
+box-shadow:0 25px 60px rgba(0,0,0,0.2);
+text-align:center;
+max-width:450px;
+animation:popUp 0.6s ease;
+
+}
+
+@keyframes popUp{
+from{
+opacity:0;
+transform:scale(0.8);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+/* CHECK ICON */
+
+.checkmark{
+
+font-size:70px;
+color:#2e7d32;
+margin-bottom:10px;
+animation:bounce 1s ease;
+
+}
+
+@keyframes bounce{
+0%{transform:scale(0)}
+60%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+/* TITLE */
+
+h2{
+color:#4e342e;
+margin-bottom:10px;
+}
+
+/* MESSAGE */
+
+.message{
+color:#555;
+font-size:16px;
+margin-bottom:10px;
+}
+
+/* BUTTON */
+
+.btn{
+
+margin-top:20px;
+display:inline-block;
+padding:12px 28px;
+background:#6d4c41;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+transition:0.3s;
+
+}
+
+.btn:hover{
+background:#4e342e;
+transform:scale(1.05);
+}
+
+/* FLOATING COFFEE */
+
+.coffee{
+
+position:absolute;
+font-size:30px;
+animation:float 6s infinite ease-in-out;
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(-30px)}
+100%{transform:translateY(0)}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- FLOATING COFFEE ICONS -->
+
+<div class="coffee" style="top:10%;left:10%;">☕</div>
+<div class="coffee" style="top:80%;left:15%;">☕</div>
+<div class="coffee" style="top:20%;right:10%;">☕</div>
+<div class="coffee" style="bottom:15%;right:20%;">☕</div>
+
+
+<!-- SUCCESS CARD -->
+
+<div class="success-card">
+
+<div class="checkmark">✔</div>
+
+<h2>Order Placed Successfully!</h2>
+
+<p class="message">
+Your delicious coffee is being prepared with love ☕
+</p>
+
+<p class="message">
+Sit back, relax and enjoy the aroma while we craft your perfect cup!
+</p>
+
+<a href="index.html" class="btn">
+Back to Home
+</a>
+
+</div>
+
+
+<!-- CONFETTI SCRIPT -->
+
+<script>
+
+function createConfetti(){
+
+for(let i=0;i<80;i++){
+
+let conf=document.createElement("div");
+
+conf.classList.add("confetti");
+
+conf.style.left=Math.random()*100+"vw";
+
+conf.style.animationDuration=(Math.random()*3+2)+"s";
+
+conf.style.backgroundColor=
+["#ff9800","#4caf50","#2196f3","#e91e63","#ff5722"][Math.floor(Math.random()*5)];
+
+document.body.appendChild(conf);
+
+}
+
+}
+
+createConfetti();
+
+</script>
+
+</body>
+</html>

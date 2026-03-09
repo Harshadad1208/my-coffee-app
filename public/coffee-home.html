@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Coffee Corner - Coffee at Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Coffee Corner</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="bestseller.html">Bestseller</a></li>
+      <li><a href="drinks.html">Drinks</a></li>
+      <li><a href="food.html">Food</a></li>
+      <li><a href="power-picks.html">Power Picks</a></li>
+      <li><a href="coffee-home.html" class="active">Coffee at Home</a></li>
+      <li><a href="ready-to-eat.html">Ready to Eat</a></li>
+    </ul>
+    <div class="search-profile">
+      <input type="text" placeholder="Looking for something specific?">
+      <span class="profile-icon">👤</span>
+      <div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">🛒 <span id="cart-count">0</span></div>
+    </div>
+  </nav>
+
+  <!-- COFFEE AT HOME MENU -->
+  <section class="menu-section">
+    <h2>Coffee at Home</h2>
+    <p class="subtitle">Enjoy premium coffee blends in the comfort of your home.</p>
+
+    <div class="menu-grid">
+
+      <!-- ITEM 1 -->
+      <div class="menu-card" data-name="Diwali Blend 250g Pack" data-price="450">
+        <div class="image-box">
+          <img src="images/diwali-blend.jpg" alt="Diwali Blend 250g Pack">
+        </div>
+        <div class="card-content">
+          <h3>Diwali Blend 250g Pack</h3>
+          <p class="desc">A festive blend perfect for Diwali celebrations.</p>
+          <p class="price">₹ 450.00</p>
+          <button class="btn add-to-cart">Add Item</button>
+        </div>
+      </div>
+
+      <!-- ITEM 2 -->
+      <div class="menu-card" data-name="India Estates Blend 150 G" data-price="350">
+        <div class="image-box">
+          <img src="images/india-estates-blend.jpg" alt="India Estates Blend 150 G">
+        </div>
+        <div class="card-content">
+          <h3>India Estates Blend 150 G</h3>
+          <p class="desc">Rich coffee sourced from India’s premium estates.</p>
+          <p class="price">₹ 350.00</p>
+          <button class="btn add-to-cart">Add Item</button>
+        </div>
+      </div>
+
+      <!-- ITEM 3 -->
+      <div class="menu-card" data-name="Karadibetta Estate 150 G" data-price="380">
+        <div class="image-box">
+          <img src="images/karadibetta-estate.jpg" alt="Karadibetta Estate 150 G">
+        </div>
+        <div class="card-content">
+          <h3>Karadibetta Estate 150 G</h3>
+          <p class="desc">Smooth and aromatic single-origin coffee from Karadibetta.</p>
+          <p class="price">₹ 380.00</p>
+          <button class="btn add-to-cart">Add Item</button>
+        </div>
+      </div>
+
+      <!-- ITEM 4 -->
+      <div class="menu-card" data-name="Italian Roast 150 G" data-price="400">
+        <div class="image-box">
+          <img src="images/italian-roast.jpg" alt="Italian Roast 150 G">
+        </div>
+        <div class="card-content">
+          <h3>Italian Roast 150 G</h3>
+          <p class="desc">Dark roasted Italian-style coffee for a bold flavor.</p>
+          <p class="price">₹ 400.00</p>
+          <button class="btn add-to-cart">Add Item</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>An average active adult requires 2,000 kcal energy per day, however calorie needs may vary.</p>
+  </footer>
+
+  <div id="notification" class="notification"></div>
+  <script src="cart.js"></script>
+
+</body>
+</html>

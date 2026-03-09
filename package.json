@@ -1,0 +1,29 @@
+{
+  "name": "coffee-corner",
+  "version": "1.0.0",
+  "description": "Coffee Corner web app with attractive UI",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.1",
+    "mssql": "^12.2.0",
+    "mysql2": "^3.19.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "keywords": [
+    "coffee",
+    "restaurant",
+    "orders",
+    "nodejs",
+    "mysql"
+  ],
+  "author": "Harshada Deshmukh",
+  "license": "ISC",
+  "type": "commonjs"
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Order Confirmation - Coffee Corner</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="checkout-body">
+
+<!-- NAVBAR -->
+<ul class="nav-links">
+  <li><a href="/">Home</a></li>
+  <li><a href="/bestseller">Bestseller</a></li>
+  <li><a href="/drinks">Drinks</a></li>
+  <li><a href="/food">Food</a></li>
+  <li><a href="/coffee-home">Coffee at Home</a></li>
+  <li><a href="/ready-to-eat" class="active">Ready to Eat</a></li>
+  <li><a href="#">Pay</a></li>
+  <li><a href="#">Store</a></li>
+  <li><a href="#">Community</a></li>
+</ul>
+
+<section class="checkout-section">
+
+<div class="confirmation-card">
+
+<div class="success-animation">
+<div class="checkmark-circle">
+<div class="checkmark"></div>
+</div>
+</div>
+
+<h2>Order Placed Successfully!</h2>
+
+<p class="confirmation-message">
+🎉 Thank you for visiting <strong>Coffee Corner</strong>.<br>
+☕ Our baristas are preparing your delicious order.<br>
+🍰 Sit back, relax, and enjoy the café experience!
+</p>
+
+<div class="checkout-buttons">
+
+<button onclick="window.location.href='index.html'" class="primary-btn">
+🏠 Back to Home
+</button>
+
+<button onclick="window.location.href='bestseller.html'" class="secondary-btn">
+☕ Order More
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Floating coffee icons -->
+<div class="coffee">☕</div>
+<div class="coffee">🫘</div>
+<div class="coffee">☕</div>
+<div class="coffee">🍩</div>
+
+<!-- ORDER SCRIPT -->
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Temporary demo customer details
+  const customer_name = "ABC Customer";
+  const phone = "9999999999";
+
+  fetch("/place-order", {
+
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
+      customer_name: customer_name,
+      phone: phone
+    })
+
+  })
+  .then(res => res.json())
+  .then(data => {
+
+    console.log("Order placed:", data);
+
+  })
+  .catch(err => {
+
+    console.error("Order error:", err);
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
