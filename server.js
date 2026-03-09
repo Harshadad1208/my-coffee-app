@@ -26,13 +26,25 @@ const db = mysql.createConnection({
   database: "coffee_corner"
 });
 
-db.connect((err) => {
-  if (err) {
-    console.error("❌ Database connection failed:", err.message);
 
-  }
-  console.log("✅ Connected to MySQL Database");
+
+
+db.connect((err) => {
+    if (err) {
+        console.log('⚠️ Running in menu-only mode (No DB)');
+        // We removed process.exit(1) so the site stays alive!
+    } else {
+        console.log('✅ Connected to MySQL Database');
+    }
 });
+
+
+
+
+
+
+
+
 
 ///////////////////////////////////////////////////////////
 // CART APIs
