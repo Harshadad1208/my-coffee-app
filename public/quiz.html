@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Coffee Quiz</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#faf6f1;
+text-align:center;
+}
+
+.quiz-box{
+width:500px;
+margin:auto;
+margin-top:80px;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+button{
+display:block;
+margin:10px auto;
+padding:12px 20px;
+border:none;
+background:#0f8f5f;
+color:white;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0a6e48;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="quiz-box">
+
+<h2>☕ Coffee Quiz</h2>
+
+<p>Where was coffee first discovered?</p>
+
+<button onclick="answer(false)">Italy</button>
+<button onclick="answer(true)">Ethiopia</button>
+<button onclick="answer(false)">France</button>
+<button onclick="answer(false)">Brazil</button>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+
+function answer(correct){
+
+if(correct){
+
+document.getElementById("result").innerHTML="✅ Correct! Coffee originated in Ethiopia.";
+
+}
+
+else{
+
+document.getElementById("result").innerHTML="❌ Wrong! Try again.";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
