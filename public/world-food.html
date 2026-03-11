@@ -1,33 +1,224 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>World Foods</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>World Foods | Coffee Corner</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-font-family:Arial;
-background:#f4f4f4;
+font-family:'Poppins',sans-serif;
+background:#0f0f0f;
+color:white;
+}
+
+/* HERO */
+
+.hero{
+height:60vh;
+background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.7)),
+url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
 text-align:center;
 }
 
-.grid{
+.hero h1{
+font-family:'Playfair Display';
+font-size:3rem;
+color:#d4af37;
+}
+
+.hero p{
+margin-top:10px;
+opacity:.9;
+}
+
+/* GRID */
+
+.section{
+padding:80px 20px;
+max-width:1300px;
+margin:auto;
+}
+
+.food-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
 gap:30px;
-padding:40px;
 }
 
-.card{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+/* CARD */
+
+.food-card{
+border-radius:14px;
+overflow:hidden;
+background:#1a1a1a;
+transition:0.4s;
+position:relative;
 }
 
-.card img{
+.food-card:hover{
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 15px 40px rgba(0,0,0,.6);
+}
+
+/* COUNTRY IMAGE */
+
+.country-img{
+height:150px;
+background-size:cover;
+background-position:center;
+position:relative;
+display:flex;
+align-items:end;
+padding:15px;
+}
+
+.country-img h3{
+background:rgba(0,0,0,.6);
+padding:6px 12px;
+border-radius:6px;
+font-size:1.1rem;
+}
+
+/* FOOD IMAGE */
+
+.food-img{
 width:100%;
-border-radius:8px;
+height:180px;
+object-fit:cover;
+}
+
+/* CONTENT */
+
+.food-content{
+padding:18px;
+}
+
+.food-content h4{
+color:#d4af37;
+margin-bottom:6px;
+}
+
+.food-content p{
+font-size:.9rem;
+opacity:.85;
+}
+
+/* BUTTON */
+
+.back{
+display:block;
+width:220px;
+text-align:center;
+margin:60px auto;
+padding:12px;
+border:1px solid #d4af37;
+border-radius:40px;
+color:#d4af37;
+text-decoration:none;
+}
+
+.back:hover{
+background:#d4af37;
+color:black;
+}
+
+.filters{
+text-align:center;
+margin:40px 0;
+}
+
+.filters button{
+padding:10px 18px;
+margin:6px;
+border:none;
+background:#1a1a1a;
+color:white;
+border-radius:20px;
+cursor:pointer;
+}
+
+.filters button:hover{
+background:#d4af37;
+color:black;
+}
+
+/* MODAL */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.85);
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.modal-content{
+background:#1a1a1a;
+border-radius:12px;
+max-width:500px;
+overflow:hidden;
+text-align:center;
+}
+
+.modal img{
+width:100%;
+height:260px;
+object-fit:cover;
+}
+
+.close{
+position:absolute;
+top:20px;
+right:30px;
+font-size:30px;
+cursor:pointer;
+}
+
+/* SEARCH BAR */
+
+.search-box{
+text-align:center;
+margin:20px 0 40px 0;
+}
+
+.search-box input{
+width:320px;
+max-width:90%;
+padding:12px 18px;
+border-radius:30px;
+border:none;
+outline:none;
+font-size:14px;
+background:#1a1a1a;
+color:white;
+border:1px solid #333;
+transition:.3s;
+}
+
+.search-box input:focus{
+border-color:#d4af37;
+box-shadow:0 0 8px rgba(212,175,55,0.4);
 }
 
 </style>
@@ -35,29 +226,357 @@ border-radius:8px;
 
 <body>
 
+<section class="hero">
+<div>
 <h1>🌍 Famous Foods Around The World</h1>
+<p>Explore iconic dishes from different countries</p>
+</div>
+</section>
 
-<div class="grid">
+<!-- FOOD SEARCH BAR -->
 
-<div class="card">
-<img src="images/pizza.jpg">
-<h3>Italy</h3>
-<p>Pizza & Pasta</p>
+<div class="search-box">
+<input type="text" id="foodSearch" placeholder="🔍 Search food or country..." onkeyup="searchFood()">
 </div>
 
-<div class="card">
-<img src="images/croissant.jpg">
-<h3>France</h3>
-<p>Croissant</p>
+<section class="section">
+
+<div class="food-grid">
+
+<!-- ITALY -->
+
+
+
+<div class="food-card" data-continent="europe">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9')">
+<h3>Italy 🇮🇹</h3>
 </div>
 
-<div class="card">
-<img src="images/bratwurst.jpg">
-<h3>Germany</h3>
-<p>Bratwurst Sausage</p>
+<img class="food-img" src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002">
+
+<div class="food-content">
+<h4>Pizza</h4>
+<p>The world's most loved Italian dish with crispy crust and rich toppings.</p>
 </div>
 
 </div>
+
+
+
+<!-- JAPAN -->
+
+<div class="food-card" data-continent="asia">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1542640244-7e672d6cef4e')">
+<h3>Japan 🇯🇵</h3>
+</div>
+
+<img class="food-img" src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351">
+
+<div class="food-content">
+<h4>Sushi</h4>
+<p>Fresh seafood and rice beautifully crafted in traditional Japanese cuisine.</p>
+</div>
+
+</div>
+
+<!-- INDIA -->
+
+<div class="food-card" data-continent="asia">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da')">
+<h3>India 🇮🇳</h3>
+</div>
+
+<img class="food-img" src="https://delishglobe.com/wp-content/uploads/2024/09/Biryani.png">
+
+<div class="food-content">
+<h4>Biryani</h4>
+<p>A fragrant rice dish layered with spices and tender meat.</p>
+</div>
+
+</div>
+
+
+<!-- USA -->
+
+<div class="food-card" data-continent="america">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29')">
+<h3>USA 🇺🇸</h3>
+</div>
+
+<img class="food-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
+
+<div class="food-content">
+<h4>Burger</h4>
+<p>Juicy grilled patty served in a bun loved worldwide.</p>
+</div>
+
+</div>
+
+<!-- FRANCE -->
+
+<div class="food-card" data-continent="europe">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34')">
+<h3>France 🇫🇷</h3>
+</div>
+
+<img class="food-img" src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e">
+
+<div class="food-content">
+<h4>Croissant</h4>
+<p>A buttery flaky pastry iconic to French breakfast culture.</p>
+</div>
+
+</div>
+
+<!-- MEXICO -->
+
+<div class="food-card" data-continent="america">
+
+<div class="country-img" style="background-image:url('https://as2.ftcdn.net/v2/jpg/01/87/53/85/1000_F_187538592_g6rfU7fg8QgcQlb9nT9DVdOOA32HIARo.jpg')">
+<h3>Mexico 🇲🇽</h3>
+</div>
+
+<img class="food-img" src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b">
+
+<div class="food-content">
+<h4>Tacos</h4>
+<p>Street food filled with meats, vegetables and spices.</p>
+</div>
+
+</div>
+
+<!-- CHINA -->
+
+<div class="food-card" data-continent="asia">
+    
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b')">
+<h3>China 🇨🇳</h3>
+</div>
+
+<img class="food-img" src="https://images.unsplash.com/photo-1563245372-f21724e3856d">
+
+<div class="food-content">
+<h4>Dumplings</h4>
+<p>Soft dough pockets filled with meat or vegetables.</p>
+</div>
+
+</div>
+
+<!-- SPAIN -->
+
+<div class="food-card" data-continent="europe">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1543783207-ec64e4d95325')">
+<h3>Spain 🇪🇸</h3>
+</div>
+
+<img class="food-img" src="https://images.unsplash.com/photo-1534080564583-6be75777b70a">
+
+<div class="food-content">
+<h4>Paella</h4>
+<p>A colorful rice dish cooked with seafood and saffron.</p>
+</div>
+
+</div>
+
+<!-- THAILAND -->
+
+<div class="food-card" data-continent="asia">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1508009603885-50cf7c579365')">
+<h3>Thailand 🇹🇭</h3>
+</div>
+
+<img class="food-img" src="https://www.recipetineats.com/tachyon/2020/01/Chicken-Pad-Thai_9-SQ.jpg">
+
+<div class="food-content">
+<h4>Pad Thai</h4>
+<p>Famous Thai stir fried noodle dish.</p>
+</div>
+
+</div>
+
+<!-- TURKEY -->
+
+<div class="food-card" data-continent="asia">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b')">
+<h3>Turkey 🇹🇷</h3>
+</div>
+
+<img class="food-img" src="https://www.turkishfoodtravel.com/wp-content/uploads/2022/07/turkish_pistachio_baklava_big.jpg">
+
+<div class="food-content">
+<h4>Baklava</h4>
+<p>A sweet layered pastry made with nuts and honey.</p>
+</div>
+
+</div>
+
+<!-- MORE COUNTRIES QUICKLY -->
+
+<!-- Germany -->
+
+<div class="food-card" data-continent="europe">
+
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b')"><h3>Germany 🇩🇪</h3></div>
+<img class="food-img" src="https://media.istockphoto.com/id/163910340/photo/sausages-are-served-together-with-sauerkraut-on-a-metal-pan.jpg?s=612x612&w=0&k=20&c=ilG1nofkR93R92fXbmO_4rKOVQNiU4XjF7km1dhDjDI=">
+<div class="food-content"><h4>Bratwurst</h4><p>Traditional German grilled sausage.</p></div>
+</div>
+
+<!-- Greece -->
+<div class="food-card" data-continent="europe">
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e')"><h3>Greece 🇬🇷</h3></div>
+<img class="food-img" src="https://e498h76z5mp.exactdn.com/wp-content/uploads/2018/07/Traditional-Gyro.jpg">
+<div class="food-content"><h4>Gyro</h4><p>Meat wrapped in pita bread with sauces.</p></div>
+</div>
+
+<!-- Korea -->
+<div class="food-card" data-continent="asia">
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1549692520-acc6669e2f0c')"><h3>South Korea 🇰🇷</h3></div>
+<img class="food-img" src="https://www.remotelands.com/travelogues/app/uploads/2020/02/Great-Kimchi-Debate-1.jpg">
+<div class="food-content"><h4>Kimchi</h4><p>Fermented vegetables full of flavor.</p></div>
+</div>
+
+<!-- Brazil -->
+<div class="food-card" data-continent="america">
+<div class="country-img" style="background-image:url('https://travelweekly.co.uk/AcuCustom/Sitename/DAM/179/SaoPaulo1.jpg')"><h3>Brazil 🇧🇷</h3></div>
+<img class="food-img" src="https://spiceworldinc.com/wp-content/uploads/2023/11/Feijoada-Scaled.jpg">
+<div class="food-content"><h4>Feijoada</h4><p>Traditional Brazilian bean and meat stew.</p></div>
+</div>
+
+<!-- Australia -->
+<div class="food-card" data-continent="Australia">
+<div class="country-img" style="background-image:url('https://api.nomadsworld.com/wp-content/uploads/2017/08/australia_kangaroos.jpg')"><h3>Australia 🇦🇺</h3></div>
+<img class="food-img" src="https://www.wandercooks.com/wp-content/uploads/2020/10/party-pies-ft-1.jpg">
+<div class="food-content"><h4>Meat Pie</h4><p>Classic Australian savory pie.</p></div>
+</div>
+
+<!-- Canada -->
+<div class="food-card" data-continent="america">
+<div class="country-img" style="background-image:url('https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg')"><h3>Canada 🇨🇦</h3></div>
+<img class="food-img" src="https://xoxobella.com/wp-content/uploads/2021/06/Canadian_Poutine-1.jpg">
+<div class="food-content"><h4>Poutine</h4><p>Fries topped with cheese curds and gravy.</p></div>
+</div>
+
+<!-- Switzerland -->
+<div class="food-card" data-continent="europe">
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470')"><h3>Switzerland 🇨🇭</h3></div>
+<img class="food-img" src="https://cdn.britannica.com/68/125568-050-2E4BD7DC/Fondue-neuchateloise.jpg">
+<div class="food-content"><h4>Fondue</h4><p>Melted cheese served with bread.</p></div>
+</div>
+
+<!-- Egypt -->
+<div class="food-card" data-continent="africa">
+<div class="country-img" style="background-image:url('https://img.freepik.com/premium-photo/landscape-with-egyptian-pyramids-great-sphinx-silhouettes-ancient-symbols-landmarks-egypt-your-travel-concept-africa-golden-sunlight-sphinx-giza-pyramid-complex-sunset_256259-1220.jpg?semt=ais_rp_50_assets&w=740&q=80')"><h3>Egypt 🇪🇬</h3></div>
+<img class="food-img" src="https://media.istockphoto.com/id/1991083380/photo/egyptian-koshary-images-traditional-egyptian-food-delicious-koshary-or-kushari.jpg?s=612x612&w=0&k=20&c=0zORGXuqRH7YcAnqu22_2OgTor0TvHlBFRvVYBJ2HKc=">
+<div class="food-content"><h4>Koshari</h4><p>Rice pasta and lentils mixed with spicy sauce.</p></div>
+</div>
+
+<!-- Morocco -->
+<div class="food-card" data-continent="africa">
+<div class="country-img" style="background-image:url('https://images.unsplash.com/photo-1518546305927-5a555bb7020d')"><h3>Morocco 🇲🇦</h3></div>
+<img class="food-img" src="https://www.vickery.tv/wp-content/uploads/2025/09/Moroccan-Chicken-Tagine.jpg">
+<div class="food-content"><h4>Tagine</h4><p>Slow cooked stew prepared in clay pot.</p></div>
+</div>
+
+<!-- Argentina -->
+<div class="food-card" data-continent="europe">
+<div class="country-img" style="background-image:url('https://media.istockphoto.com/id/1159474019/photo/part-of-the-iguazu-falls-seen-from-the-argentinian-national-park.jpg?s=612x612&w=0&k=20&c=rDUTt2nk74mB6G8-QmQbw_pC15KeckQQVYKjCkPwKJ8=')"><h3>Argentina 🇦🇷</h3></div>
+<img class="food-img" src="https://thumbs.dreamstime.com/b/argetnine-barbecue-2887157.jpg">
+<div class="food-content"><h4>Asado</h4><p>Traditional Argentinian barbecue feast.</p></div>
+</div>
+
+</div>
+
+</section>
+
+<a href="fun.html" class="back">Back to Fun Zone</a>
+
+<!-- FOOD MODAL -->
+
+<div class="modal" id="foodModal">
+
+<span class="close" onclick="closeModal()">✖</span>
+
+<div class="modal-content">
+
+<img id="modalImg">
+
+<div class="modal-text">
+
+<h2 id="modalFood"></h2>
+<h4 id="modalCountry"></h4>
+<p id="modalDesc"></p>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function filterFood(continent){
+
+let cards=document.querySelectorAll(".food-card");
+
+cards.forEach(card=>{
+
+if(continent==="all"){
+card.style.display="block";
+}
+
+else{
+card.style.display = card.dataset.continent === continent ? "block" : "none";
+}
+
+});
+
+}
+
+function openModal(food,country,desc,img){
+
+document.getElementById("foodModal").style.display="flex";
+
+document.getElementById("modalFood").innerText=food;
+document.getElementById("modalCountry").innerText=country;
+document.getElementById("modalDesc").innerText=desc;
+document.getElementById("modalImg").src=img;
+
+}
+
+function closeModal(){
+
+document.getElementById("foodModal").style.display="none";
+
+}
+
+function searchFood(){
+
+let input=document.getElementById("foodSearch").value.toLowerCase();
+let cards=document.querySelectorAll(".food-card");
+
+cards.forEach(card=>{
+
+let text=card.innerText.toLowerCase();
+
+if(text.includes(input)){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+
+});
+
+}
+
+</script>
 
 </body>
 </html>

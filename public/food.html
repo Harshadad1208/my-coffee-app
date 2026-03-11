@@ -1,115 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Coffee Corner - Food</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>World Foods | Coffee Corner</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Poppins',sans-serif;
+background:#0f0f0f;
+color:white;
+}
+
+/* HERO */
+
+.hero{
+height:70vh;
+background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.8)),
+url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1920");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-family:'Playfair Display';
+font-size:3.5rem;
+color:#d4af37;
+}
+
+.hero p{
+margin-top:10px;
+opacity:.9;
+}
+
+/* SECTION */
+
+.section{
+max-width:1200px;
+margin:auto;
+padding:80px 20px;
+}
+
+.section h2{
+text-align:center;
+color:#d4af37;
+font-family:'Playfair Display';
+font-size:2.5rem;
+margin-bottom:40px;
+}
+
+/* FOOD GRID */
+
+.food-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+}
+
+.food-card{
+background:#1a1a1a;
+border-radius:10px;
+overflow:hidden;
+transition:.3s;
+}
+
+.food-card:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 30px rgba(0,0,0,0.6);
+}
+
+.food-card img{
+width:100%;
+height:200px;
+object-fit:cover;
+}
+
+.food-content{
+padding:20px;
+}
+
+.food-content h3{
+color:#d4af37;
+margin-bottom:8px;
+}
+
+.food-content span{
+font-size:0.9rem;
+opacity:0.7;
+}
+
+.food-content p{
+margin-top:10px;
+font-size:0.95rem;
+opacity:.85;
+}
+
+/* QUOTE SECTION */
+
+.quote{
+background:#141414;
+padding:70px 20px;
+text-align:center;
+}
+
+.quote p{
+font-size:1.3rem;
+font-style:italic;
+max-width:800px;
+margin:auto;
+opacity:.9;
+}
+
+/* BACK BUTTON */
+
+.back{
+display:block;
+width:220px;
+text-align:center;
+margin:60px auto;
+padding:12px;
+border:1px solid #d4af37;
+border-radius:40px;
+color:#d4af37;
+text-decoration:none;
+}
+
+.back:hover{
+background:#d4af37;
+color:black;
+}
+
+</style>
+
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="logo">Coffee Corner</div>
-    
-    
-    
-    
-    
-    
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="bestseller.html">Bestseller</a></li>
-      <li><a href="drinks.html">Drinks</a></li>
-      <li><a href="food.html" class="active">Food</a></li>
-      <li><a href="power-picks.html">Power Picks</a></li>
+<!-- HERO -->
 
-      <li><a href="coffee-home.html">Coffee at Home</a></li>
-      <li><a href="ready-to-eat.html">Ready to Eat</a></li>
-    </ul>
+<section class="hero">
+<div>
+<h1>World Famous Foods</h1>
+<p>Discover iconic dishes loved across cultures and continents</p>
+</div>
+</section>
 
+<!-- FOOD SECTION -->
 
+<section class="section">
 
+<h2>Iconic Dishes Around the World</h2>
 
+<div class="food-grid">
 
-    <div class="search-profile">
-      <input type="text" placeholder="Looking for something specific?">
-      <span class="profile-icon">👤</span>
-      <div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">🛒 <span id="cart-count">0</span></div>
-    </div>
-  </nav>
+<!-- Pizza -->
 
-  <!-- FOOD MENU -->
-  <section class="menu-section">
-    <h2>Food</h2>
-    <p class="subtitle">Delicious bites to pair with your coffee.</p>
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1548365328-9f547fb0953d?q=80&w=800">
+<div class="food-content">
+<h3>Pizza</h3>
+<span>Italy 🇮🇹</span>
+<p>A timeless Italian classic with crispy crust, rich tomato sauce, and melted cheese loved worldwide.</p>
+</div>
+</div>
 
-    <div class="menu-grid">
+<!-- Sushi -->
 
-      <!-- ITEM 1 -->
-      <div class="menu-card" data-name="Avocado Panini Sandwich" data-price="250">
-        <div class="image-box">
-          <img src="images/avocado-panini.jpg" alt="Avocado Panini Sandwich">
-        </div>
-        <div class="card-content">
-          <h3>Avocado Panini Sandwich</h3>
-          <p class="desc">Fresh avocado with crisp veggies in a toasted panini.</p>
-          <p class="price">₹ 250.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?q=80&w=800">
+<div class="food-content">
+<h3>Sushi</h3>
+<span>Japan 🇯🇵</span>
+<p>Fresh seafood combined with seasoned rice, representing the elegance of Japanese cuisine.</p>
+</div>
+</div>
 
-      <!-- ITEM 2 -->
-      <div class="menu-card" data-name="Chicken Ham Croissant Sandwich" data-price="320">
-        <div class="image-box">
-          <img src="images/chicken-ham-croissant.jpg" alt="Chicken Ham Croissant Sandwich">
-        </div>
-        <div class="card-content">
-          <h3>Chicken Ham Croissant Sandwich</h3>
-          <p class="desc">Buttery croissant filled with chicken ham and cheese.</p>
-          <p class="price">₹ 320.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<!-- Tacos -->
 
-      <!-- ITEM 3 -->
-      <div class="menu-card" data-name="Mushroom Bahn Mi" data-price="280">
-        <div class="image-box">
-          <img src="images/mushroom-bahnmi.jpg" alt="Mushroom Bahn Mi">
-        </div>
-        <div class="card-content">
-          <h3>Mushroom Bahn Mi</h3>
-          <p class="desc">Vietnamese-style sandwich with savory mushrooms.</p>
-          <p class="price">₹ 280.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?q=80&w=800">
+<div class="food-content">
+<h3>Tacos</h3>
+<span>Mexico 🇲🇽</span>
+<p>A vibrant street food filled with meat, vegetables, and spices wrapped in soft tortillas.</p>
+</div>
+</div>
 
-      <!-- ITEM 4 -->
-      <div class="menu-card" data-name="Pepper Chicken Bahn Mi" data-price="300">
-        <div class="image-box">
-          <img src="images/pepper-chicken-bahnmi.jpg" alt="Pepper Chicken Bahn Mi">
-        </div>
-        <div class="card-content">
-          <h3>Pepper Chicken Bahn Mi</h3>
-          <p class="desc">Spicy pepper chicken in a classic Bahn Mi roll.</p>
-          <p class="price">₹ 300.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<!-- Biryani -->
 
-    </div>
-  </section>
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1631515242808-497c3fbd397a?q=80&w=800">
+<div class="food-content">
+<h3>Biryani</h3>
+<span>India 🇮🇳</span>
+<p>A fragrant rice dish layered with spices, herbs, and meat or vegetables, famous across South Asia.</p>
+</div>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>An average active adult requires 2,000 kcal energy per day, however calorie needs may vary.</p>
-  </footer>
+<!-- Croissant -->
 
-  <div id="notification" class="notification"></div>
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?q=80&w=800">
+<div class="food-content">
+<h3>Croissant</h3>
+<span>France 🇫🇷</span>
+<p>A buttery, flaky pastry that perfectly represents the elegance of French baking.</p>
+</div>
+</div>
 
-  <script src="cart.js"></script>
+<!-- Burger -->
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800">
+<div class="food-content">
+<h3>Burger</h3>
+<span>USA 🇺🇸</span>
+<p>A juicy grilled patty served in a bun with fresh toppings, an icon of American fast food culture.</p>
+</div>
+</div>
+
+<!-- Pad Thai -->
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1559314809-0f31657f8c66?q=80&w=800">
+<div class="food-content">
+<h3>Pad Thai</h3>
+<span>Thailand 🇹🇭</span>
+<p>A famous Thai stir-fried noodle dish combining sweet, sour, and savory flavors.</p>
+</div>
+</div>
+
+<!-- Paella -->
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1534080564583-6be75777b70a?q=80&w=800">
+<div class="food-content">
+<h3>Paella</h3>
+<span>Spain 🇪🇸</span>
+<p>A colorful rice dish cooked with seafood, saffron, and vegetables from Valencia.</p>
+</div>
+</div>
+
+<!-- Dumplings -->
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=800">
+<div class="food-content">
+<h3>Dumplings</h3>
+<span>China 🇨🇳</span>
+<p>Soft dough filled with meat or vegetables, symbolizing prosperity in Chinese culture.</p>
+</div>
+</div>
+
+<!-- Baklava -->
+
+<div class="food-card">
+<img src="https://images.unsplash.com/photo-1604908554265-9a5c91c66f63?q=80&w=800">
+<div class="food-content">
+<h3>Baklava</h3>
+<span>Turkey 🇹🇷</span>
+<p>A rich layered pastry made with nuts and honey syrup, a famous Middle Eastern dessert.</p>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- QUOTE -->
+
+<section class="quote">
+
+<p>
+"Food is the ingredient that binds cultures together and tells the story of every nation."
+</p>
+
+</section>
+
+<a href="fun.html" class="back">Back to Fun Zone</a>
 
 </body>
 </html>
