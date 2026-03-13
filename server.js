@@ -19,12 +19,15 @@ app.use(express.static(path.join(__dirname, "public")));
 // 2. DATABASE CONNECTION (MySQL)
 ///////////////////////////////////////////////////////////
 
+
+
+
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "Harshu@2005",
-  database: process.env.DB_NAME || "coffee_corner",
-  port: process.env.DB_PORT || 3306
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
 
 db.connect((err) => {
@@ -33,9 +36,12 @@ db.connect((err) => {
     console.error("Error Details:", err.message);
   } else {
     console.log("✅ SUCCESS: Connected to MySQL Database");
-    initDB();
   }
 });
+
+
+
+
 
 ///////////////////////////////////////////////////////////
 // 3. DATABASE INITIALIZATION
