@@ -23,27 +23,31 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 
-const db = mysql.createConnection({
- 
+const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
+  port: Number(process.env.DB_PORT),
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
   ssl: {
-    rejectUnauthorized: false 
+    rejectUnauthorized: false
   }
 });
 
 
-db.connect((err) => {
+db.getConnection((err, connection) => {
   if (err) {
-    console.error("❌ CRITICAL: MySQL Connection Failed!");
-    console.error("Error Details:", err.message);
-  } else {
-    console.log("✅ SUCCESS: Connected to MySQL Database");
-    initDB();
+    console.error("❌ MySQL Connection Failed:", err.message);
+    return;
   }
+
+  console.log("✅ MySQL Database Connected");
+
+  connection.release();
+  initDB();
 });
 
 
