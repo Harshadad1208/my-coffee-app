@@ -1,303 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
-<title>Payment - Coffee Corner</title>
+<title>Coffee Corner Payment</title>
 
 <style>
 
 body{
-font-family: 'Segoe UI', sans-serif;
 margin:0;
-background:linear-gradient(135deg,#fff5ec,#ffe2c7);
+font-family:'Segoe UI',sans-serif;
+background:#f4f4f4;
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
 }
 
-/* PAYMENT CARD */
+/* MAIN CARD */
 
-.payment-container{
-
+.payment-wrapper{
+width:520px;
 background:white;
-width:500px;
 padding:40px;
-border-radius:15px;
-box-shadow:0 20px 40px rgba(0,0,0,0.15);
+border-radius:16px;
+box-shadow:0 25px 60px rgba(0,0,0,0.15);
+}
+
+.payment-wrapper h2{
 text-align:center;
-
-animation:fadeIn 0.7s ease;
-
-}
-
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-h2{
+margin-bottom:30px;
 color:#4e342e;
-margin-bottom:25px;
 }
 
-/* PAYMENT OPTIONS */
+/* PAYMENT METHOD */
 
-.payment-option{
+.payment-method{
+border:1px solid #e5e5e5;
+border-radius:10px;
+padding:18px;
+margin-bottom:16px;
+display: flex;
+flex-direction: column;
+align-items: flex-start; /* Ensures all children align to the left */
+}
 
+/* HEADER - Now Left Aligned */
+
+.method-header{
 display:flex;
 align-items:center;
-justify-content:space-between;
-padding:15px;
-margin-bottom:15px;
-border:2px solid #eee;
-border-radius:10px;
-cursor:pointer;
-transition:0.3s;
-
-}
-
-.payment-option:hover{
-border-color:#8d6e63;
-background:#fff7f1;
-}
-
-.payment-option input{
-margin-right:10px;
-}
-
-.payment-label{
-font-size:16px;
+justify-content: flex-start;
+width: 100%;
+gap:10px;
 font-weight:600;
+cursor: pointer;
 }
 
-/* UPI APPS */
+/* FIX: Prevent radio button from stretching */
+.method-header input[type="radio"] {
+    width: auto;
+    margin: 0;
+    cursor: pointer;
+}
 
-.upi-apps{
-display:none;
+/* INPUTS */
+
+.payment-method select,
+.payment-method input[type="text"]{
+width:100%;
+box-sizing: border-box; /* Prevents input from overflowing */
+padding:10px;
 margin-top:10px;
-text-align:left;
-padding-left:20px;
+border-radius:6px;
+border:1px solid #ddd;
 }
 
-.upi-apps label{
-display:block;
-margin:6px 0;
+/* CARD FORM */
+
+.card-form{
+display:none;
+width: 100%;
+margin-top:10px;
 }
 
-/* PAY BUTTON */
+.row{
+display:flex;
+gap:10px;
+}
+
+/* BUTTON */
 
 .pay-btn{
-
-margin-top:20px;
-background:#2e7d32;
-border:none;
-color:white;
-padding:15px;
-font-size:18px;
 width:100%;
+margin-top:20px;
+padding:14px;
+border:none;
 border-radius:8px;
+background:linear-gradient(135deg,#ff9800,#ff5722);
+color:white;
+font-size:16px;
+font-weight:bold;
 cursor:pointer;
-transition:0.3s;
-
 }
 
 .pay-btn:hover{
-background:#1b5e20;
+opacity:0.9;
 }
 
-/* SUCCESS POPUP */
+/* SUCCESS NOTIFICATION */
 
-.success-popup{
-
+.toast{
 position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:40px;
-border-radius:15px;
-box-shadow:0 20px 40px rgba(0,0,0,0.2);
-text-align:center;
-display:none;
-
+top:20px;
+right:20px;
+background:#4CAF50;
+color:white;
+padding:14px 24px;
+border-radius:8px;
+font-weight:600;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+opacity:0;
+transform:translateY(-20px);
+transition:all 0.4s ease;
+z-index:999;
 }
 
-.success-popup h3{
-color:#2e7d32;
-}
-
-.checkmark{
-
-font-size:60px;
-color:#2e7d32;
-animation:pop 0.5s ease;
-
-}
-
-@keyframes pop{
-0%{transform:scale(0);}
-100%{transform:scale(1);}
+.toast.show{
+opacity:1;
+transform:translateY(0);
 }
 
 </style>
-
 </head>
 
 <body>
 
+<div class="payment-wrapper">
 
+<h2>☕ Payment</h2>
 
+<div class="payment-method">
 
-<div class="payment-container">
+<label class="method-header">
+<input type="radio" name="payment" value="upi" checked>
+<span>UPI Payment</span>
+</label>
 
-<h2>Choose Payment Method</h2>
+<select>
+<option>Google Pay</option>
+<option>PhonePe</option>
+<option>Paytm</option>
+</select>
 
+</div>
 
-<!-- CARD PAYMENT -->
+<div class="payment-method">
 
-<div class="payment-option">
-<label class="payment-label">
+<label class="method-header">
 <input type="radio" name="payment" value="card">
-💳 Card Payment
-</label>
-</div>
-
-
-<!-- UPI PAYMENT -->
-
-<div class="payment-option">
-
-<label class="payment-label">
-<input type="radio" name="payment" value="upi" id="upiOption">
-📱 UPI Payment
+<span>Card Payment</span>
 </label>
 
-</div>
+<div class="card-form" id="cardForm">
 
-<div class="upi-apps" id="upiApps">
+<input type="text"
+placeholder="Card Holder Name"
+oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'')">
 
-<label>
-<input type="radio" name="upiApp"> Google Pay
-</label>
+<input type="text"
+placeholder="Card Number"
+maxlength="16"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
-<label>
-<input type="radio" name="upiApp"> PhonePe
-</label>
+<div class="row">
 
-<label>
-<input type="radio" name="upiApp"> Paytm
-</label>
+<input type="text"
+placeholder="Expiry MMYY"
+maxlength="4"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+<input type="text"
+placeholder="CVV"
+maxlength="3"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
 
 </div>
 
+</div>
 
-<!-- CASH PAYMENT -->
+</div>
 
-<div class="payment-option">
+<div class="payment-method">
 
-<label class="payment-label">
+<label class="method-header">
 <input type="radio" name="payment" value="cash">
-💵 Cash Payment
+<span>Cash Payment</span>
 </label>
 
 </div>
 
-
-<button class="pay-btn" onclick="makePayment()">
-Pay Now
+<button class="pay-btn" onclick="payNow()">
+Confirm Payment
 </button>
 
 </div>
 
-
-
-<!-- SUCCESS POPUP -->
-
-<div class="success-popup" id="successPopup">
-
-<div class="checkmark">✔</div>
-
-<h3>Payment Successful</h3>
-
-<p>Your order has been placed successfully.</p>
-
-</div>
-
-
-
-
 <script>
 
-document.getElementById("upiOption").addEventListener("change", () => {
-  document.getElementById("upiApps").style.display = "block";
+const radios=document.querySelectorAll("input[name='payment']");
+const cardForm=document.getElementById("cardForm");
+
+radios.forEach(r=>{
+
+r.addEventListener("change",()=>{
+
+if(r.value==="card" && r.checked){
+cardForm.style.display="block";
+}
+else{
+cardForm.style.display="none";
+}
+
 });
 
-async function makePayment(){
+});
 
-  const selected = document.querySelector('input[name="payment"]:checked');
+function payNow(){
 
-  if(!selected){
-    alert("Please select payment method");
-    return;
-  }
+const toast=document.getElementById("successToast");
 
-  const name = localStorage.getItem("customer_name");
-  const phone = localStorage.getItem("customer_phone");
-  const table = localStorage.getItem("table_number");
+toast.classList.add("show");
 
-  try{
-
-    const response = await fetch("/place-order",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        customer_name:name,
-        phone:phone,
-        table_number:table
-      })
-    });
-
-    const data = await response.json();
-
-    if(data.success){
-
-      // show popup
-      document.getElementById("successPopup").style.display="block";
-
-      // clear local storage
-      localStorage.removeItem("customer_name");
-      localStorage.removeItem("customer_phone");
-      localStorage.removeItem("table_number");
-
-      // redirect after 2 seconds
-      setTimeout(()=>{
-        window.location.href = "order-success.html";
-      },2000);
-
-    }else{
-
-      alert("Order failed. Please try again.");
-
-    }
-
-  }catch(error){
-
-    console.error("Payment Error:",error);
-    alert("Something went wrong");
-
-  }
+setTimeout(()=>{
+toast.classList.remove("show");
+window.location.href="/order-success";
+},2000);
 
 }
 
 </script>
-
-
-
-
-
+<div id="successToast" class="toast">
+✅ Payment Successful
+</div>
 </body>
 </html>

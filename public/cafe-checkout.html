@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Cafe Checkout - Coffee Corner</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+font-family:'Segoe UI',sans-serif;
+margin:0;
+background:linear-gradient(135deg,#fff6ec,#ffe2c4,#fff9f3);
+}
+
+/* NAVBAR */
+
+.nav-links{
+display:flex;
+justify-content:center;
+gap:25px;
+background:#3e2723;
+padding:15px;
+list-style:none;
+margin:0;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+.nav-links a:hover{
+color:#ffcc80;
+}
+
+/* MAIN SECTION */
+
+.cart-section{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+.cart-section h2{
+text-align:center;
+font-size:36px;
+margin-bottom:35px;
+color:#4e342e;
+}
+
+/* GRID */
+
+.cart-layout{
+display:grid;
+grid-template-columns:340px 1fr;
+gap:35px;
+}
+
+/* CUSTOMER CARD */
+
+.customer-card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.customer-card h3{
+margin-bottom:20px;
+color:#5d4037;
+}
+
+.customer-card label{
+font-weight:600;
+display:block;
+margin-top:10px;
+}
+
+.customer-card input{
+width:100%;
+padding:12px;
+margin-top:6px;
+border-radius:8px;
+border:1px solid #ddd;
+margin-bottom:12px;
+font-size:14px;
+transition:0.3s;
+}
+
+.customer-card input:focus{
+border-color:#ff9800;
+outline:none;
+box-shadow:0 0 5px rgba(255,152,0,0.5);
+}
+
+/* CART CARD */
+
+.cart-card{
+background:white;
+border-radius:15px;
+padding:25px;
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* TABLE */
+
+.cart-table{
+width:100%;
+border-collapse:collapse;
+}
+
+.cart-table th{
+background:#6d4c41;
+color:white;
+padding:14px;
+font-size:15px;
+}
+
+.cart-table td{
+padding:14px;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+.cart-table tr:hover{
+background:#fff3e6;
+}
+
+/* BUTTONS */
+
+.remove-btn{
+background:#e53935;
+border:none;
+color:white;
+padding:7px 14px;
+border-radius:6px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.remove-btn:hover{
+background:#c62828;
+}
+
+.checkout-btn{
+background:linear-gradient(135deg,#ff9800,#ff6f00);
+border:none;
+color:white;
+padding:15px 28px;
+font-size:16px;
+border-radius:10px;
+cursor:pointer;
+margin-top:20px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.checkout-btn:hover{
+transform:scale(1.05);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* SUMMARY */
+
+.cart-summary{
+text-align:right;
+margin-top:20px;
+font-size:19px;
+color:#4e342e;
+}
+
+#empty-cart{
+text-align:center;
+margin-top:20px;
+font-size:18px;
+color:#777;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<ul class="nav-links">
+<li><a href="/">Home</a></li>
+<li><a href="/bestseller">Bestseller</a></li>
+<li><a href="/drinks">Drinks</a></li>
+<li><a href="/food">Food</a></li>
+<li><a href="/coffee-home">Coffee at Home</a></li>
+<li><a href="/ready-to-eat">Ready to Eat</a></li>
+</ul>
+
+<section class="cart-section">
+
+<h2>☕ Cafe Checkout</h2>
+
+<div class="cart-layout">
+
+<!-- CUSTOMER DETAILS -->
+
+<div class="customer-card">
+
+<h3>Customer Details</h3>
+
+<label>Customer Name</label>
+<input type="text" id="customerName" placeholder="Enter your name">
+
+<label>Phone Number</label>
+<input type="tel" id="customerPhone" placeholder="Enter phone number"
+oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+
+<label>Age</label>
+<input type="number" id="customerAge" placeholder="Enter age">
+
+<label>Table Number</label>
+<input type="number" id="tableNumber" placeholder="Enter table number">
+
+</div>
+
+<!-- CART TABLE -->
+
+<div class="cart-card">
+
+<table class="cart-table">
+
+<thead>
+<tr>
+<th>Item</th>
+<th>Price (₹)</th>
+<th>Quantity</th>
+<th>Subtotal (₹)</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="cart-items"></tbody>
+
+</table>
+
+<p id="empty-cart" style="display:none;">Your cart is empty</p>
+
+<div class="cart-summary">
+
+<p><strong>Total: ₹ <span id="cart-total">0.00</span></strong></p>
+
+<button class="checkout-btn" id="checkoutBtn">
+Proceed to Payment
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const cartItems = document.getElementById("cart-items");
+    const cartTotal = document.getElementById("cart-total");
+    const emptyCartMsg = document.getElementById("empty-cart");
+    let currentCartData = []; // Store cart data globally for the checkout
+
+    function loadCart() {
+        fetch("/cart")
+            .then(res => res.json())
+            .then(data => {
+                currentCartData = data; // Save the data for checkout
+                cartItems.innerHTML = "";
+
+                if (data.length === 0) {
+                    emptyCartMsg.style.display = "block";
+                    cartTotal.textContent = "0.00";
+                    return;
+                }
+
+                emptyCartMsg.style.display = "none";
+                let total = 0;
+
+                data.forEach(item => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${item.name}</td>
+                        <td>${parseFloat(item.price).toFixed(2)}</td>
+                        <td>1</td>
+                        <td>${parseFloat(item.price).toFixed(2)}</td>
+                        <td>
+                            <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+                        </td>
+                    `;
+                    cartItems.appendChild(row);
+                    total += parseFloat(item.price);
+                });
+                cartTotal.textContent = total.toFixed(2);
+            });
+    }
+
+    window.removeItem = function(id) {
+        fetch("/cart/" + id, { method: "DELETE" })
+            .then(() => loadCart());
+    };
+
+    document.getElementById("checkoutBtn").addEventListener("click", () => {
+        const name = document.getElementById("customerName").value.trim();
+        const phone = document.getElementById("customerPhone").value.trim();
+        const age = document.getElementById("customerAge").value.trim();
+        const table = document.getElementById("tableNumber").value.trim();
+
+        if (!name || !phone || !age || !table) {
+            alert("Please fill all customer details");
+            return;
+        }
+
+        if (currentCartData.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        // Prepare the data to match your server.js route
+        const orderData = {
+            customer_name: name,
+            phone: phone,
+            age: age,
+            table_number: table,
+            order_type: 'cafe',
+            total_amount: document.getElementById("cart-total").textContent
+        };
+
+        // SEND DATA TO SERVER
+        fetch("/place-order", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(orderData)
+        })
+        .then(res => res.json())
+        
+        
+        
+        
+        
+        .then(response => {
+
+    if (response.success) {
+
+    // Save order type for later
+    localStorage.setItem("orderType","cafe")
+
+    // Redirect to payment page
+    window.location.href="/payment"
+
+}
+    
+    
+    
+    else {
+
+        alert("Order failed: " + response.message);
+
+    }
+
+})
+
+
+
+
+        .catch(err => {
+            console.error("Checkout Error:", err);
+            alert("Server error. Check your terminal.");
+        });
+    });
+
+    loadCart();
+});
+</script>
+
+
+
+
+
+
+</body>
+</html>
+```

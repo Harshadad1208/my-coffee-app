@@ -2,98 +2,174 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Coffee Corner - Ready to Eat</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Coffee Corner - Ready to Eat</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="logo">Coffee Corner</div>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="bestseller.html">Bestseller</a></li>
-      <li><a href="drinks.html">Drinks</a></li>
-      <li><a href="food.html">Food</a></li>
-      <li><a href="power-picks.html">Power Picks</a></li>
+<!-- NAVBAR -->
 
-      <li><a href="coffee-home.html">Coffee at Home</a></li>
-      <li><a href="ready-to-eat.html" class="active">Ready to Eat</a></li>
-    </ul>
-    <div class="search-profile">
-      <input type="text" placeholder="Looking for something specific?">
-      <span class="profile-icon">👤</span>
-      <div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">🛒 <span id="cart-count">0</span></div>
-    </div>
-  </nav>
+<nav class="navbar">
 
-  <!-- READY TO EAT MENU -->
-  <section class="menu-section">
-    <h2>Ready to Eat</h2>
-    <p class="subtitle">Delicious snacks to enjoy with your coffee.</p>
+<div class="logo">Coffee Corner</div>
 
-    <div class="menu-grid">
+<ul class="nav-links">
+<li><a href="/">Home</a></li>
+<li><a href="/bestseller">Bestseller</a></li>
+<li><a href="/drinks">Drinks</a></li>
+<li><a href="/food">Food</a></li>
+<li><a href="/power-picks">Power Picks</a></li>
+<li><a href="/coffee-home">Coffee at Home</a></li>
+<li><a href="/ready-to-eat" class="active">Ready to Eat</a></li>
+</ul>
 
-      <div class="menu-card" data-name="Almond Biscotti - 50g" data-price="150">
-        <div class="image-box">
-          <img src="images/almond-biscotti.jpg" alt="Almond Biscotti">
-        </div>
-        <div class="card-content">
-          <h3>Almond Biscotti - 50g</h3>
-          <p class="desc">Crunchy almond-flavored biscotti for a perfect coffee pairing.</p>
-          <p class="price">₹ 150.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<div class="search-profile">
 
-      <div class="menu-card" data-name="Cranberry Biscotti - 50g" data-price="160">
-        <div class="image-box">
-          <img src="images/cranberry-biscotti.jpg" alt="Cranberry Biscotti">
-        </div>
-        <div class="card-content">
-          <h3>Cranberry Biscotti - 50g</h3>
-          <p class="desc">Sweet and tangy cranberry biscotti for your snack time.</p>
-          <p class="price">₹ 160.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<input type="text" placeholder="Looking for something specific?">
 
-      <div class="menu-card" data-name="Roasted & Salted Almond 50gms" data-price="200">
-        <div class="image-box">
-          <img src="images/roasted-salted-almond.jpg" alt="Roasted & Salted Almond">
-        </div>
-        <div class="card-content">
-          <h3>Roasted & Salted Almond 50gms</h3>
-          <p class="desc">Premium almonds, roasted and lightly salted for a tasty crunch.</p>
-          <p class="price">₹ 200.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<span class="profile-icon">👤</span>
 
-      <div class="menu-card" data-name="Salted Almond Chocolate Bites - 50g" data-price="220">
-        <div class="image-box">
-          <img src="images/salted-almond-chocolate.jpg" alt="Salted Almond Chocolate Bites">
-        </div>
-        <div class="card-content">
-          <h3>Salted Almond Chocolate Bites - 50g</h3>
-          <p class="desc">Rich chocolate bites with salted almonds for indulgent snacking.</p>
-          <p class="price">₹ 220.00</p>
-          <button class="btn add-to-cart">Add Item</button>
-        </div>
-      </div>
+<div class="cart" id="cart-icon" onclick="window.location.href='/cart-page'">
+🛒 <span id="cart-count">0</span>
+</div>
 
-    </div>
-  </section>
+</div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>An average active adult requires 2,000 kcal energy per day, however calorie needs may vary.</p>
-  </footer>
+</nav>
 
-  <div id="notification" class="notification"></div>
-  <script src="cart.js"></script>
+
+<!-- MENU SECTION -->
+
+<section class="menu-section">
+
+<h2>Ready to Eat</h2>
+
+<p class="subtitle">
+Delicious snacks to enjoy with your coffee.
+</p>
+
+<div class="menu-grid">
+
+
+<div class="menu-card" data-name="Almond Biscotti - 50g" data-price="150">
+
+<div class="image-box">
+<img src="images/almond-biscotti.jpg">
+</div>
+
+<div class="card-content">
+
+<h3>Almond Biscotti - 50g</h3>
+
+<p class="desc">
+Crunchy almond flavored biscotti for a perfect coffee pairing.
+</p>
+
+<p class="price">₹ 150.00</p>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
+</div>
+
+</div>
+
+
+<div class="menu-card" data-name="Cranberry Biscotti - 50g" data-price="160">
+
+<div class="image-box">
+<img src="images/cranberry-biscotti.jpg">
+</div>
+
+<div class="card-content">
+
+<h3>Cranberry Biscotti - 50g</h3>
+
+<p class="desc">
+Sweet and tangy cranberry biscotti for your snack time.
+</p>
+
+<p class="price">₹ 160.00</p>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
+</div>
+
+</div>
+
+
+<div class="menu-card" data-name="Roasted & Salted Almond 50gms" data-price="200">
+
+<div class="image-box">
+<img src="images/roasted-salted-almond.jpg">
+</div>
+
+<div class="card-content">
+
+<h3>Roasted & Salted Almond 50gms</h3>
+
+<p class="desc">
+Premium almonds roasted and lightly salted for a tasty crunch.
+</p>
+
+<p class="price">₹ 200.00</p>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
+</div>
+
+</div>
+
+
+<div class="menu-card" data-name="Salted Almond Chocolate Bites - 50g" data-price="220">
+
+<div class="image-box">
+<img src="images/salted-almond-chocolate.jpg">
+</div>
+
+<div class="card-content">
+
+<h3>Salted Almond Chocolate Bites - 50g</h3>
+
+<p class="desc">
+Rich chocolate bites with salted almonds for indulgent snacking.
+</p>
+
+<p class="price">₹ 220.00</p>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<footer>
+
+<p>
+An average active adult requires 2,000 kcal energy per day,
+however calorie needs may vary.
+</p>
+
+</footer>
+
+<div id="notification"></div>
+
+<script src="cart.js"></script>
 
 </body>
 </html>

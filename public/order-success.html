@@ -18,27 +18,9 @@ background:linear-gradient(135deg,#fff3e6,#ffe0c2,#ffd9b3);
 overflow:hidden;
 }
 
-/* CONFETTI */
-
-.confetti{
-position:absolute;
-width:10px;
-height:10px;
-background:red;
-top:-10px;
-animation:fall linear infinite;
-}
-
-@keyframes fall{
-to{
-transform:translateY(100vh) rotate(360deg);
-}
-}
-
 /* SUCCESS CARD */
 
 .success-card{
-
 background:white;
 padding:50px;
 border-radius:18px;
@@ -46,7 +28,8 @@ box-shadow:0 25px 60px rgba(0,0,0,0.2);
 text-align:center;
 max-width:450px;
 animation:popUp 0.6s ease;
-
+position:relative;
+z-index:2;
 }
 
 @keyframes popUp{
@@ -63,12 +46,10 @@ transform:scale(1);
 /* CHECK ICON */
 
 .checkmark{
-
 font-size:70px;
 color:#2e7d32;
 margin-bottom:10px;
 animation:bounce 1s ease;
-
 }
 
 @keyframes bounce{
@@ -95,7 +76,6 @@ margin-bottom:10px;
 /* BUTTON */
 
 .btn{
-
 margin-top:20px;
 display:inline-block;
 padding:12px 28px;
@@ -105,7 +85,6 @@ text-decoration:none;
 border-radius:8px;
 font-weight:bold;
 transition:0.3s;
-
 }
 
 .btn:hover{
@@ -113,22 +92,88 @@ background:#4e342e;
 transform:scale(1.05);
 }
 
-/* FLOATING COFFEE */
+/* CONFETTI */
 
-.coffee{
-
+.confetti{
 position:absolute;
-font-size:30px;
-animation:float 6s infinite ease-in-out;
-
+width:10px;
+height:10px;
+top:-10px;
+animation:fall linear infinite;
 }
 
-@keyframes float{
+@keyframes fall{
+to{
+transform:translateY(100vh) rotate(360deg);
+}
+}
 
-0%{transform:translateY(0)}
-50%{transform:translateY(-30px)}
-100%{transform:translateY(0)}
+/* FIREWORKS */
 
+.firework{
+position:absolute;
+width:6px;
+height:6px;
+background:#ff9800;
+border-radius:50%;
+animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+0%{
+transform:scale(1);
+opacity:1;
+}
+100%{
+transform:scale(15);
+opacity:0;
+}
+}
+
+/* COFFEE CUP */
+
+.cup{
+font-size:60px;
+margin-bottom:10px;
+position:relative;
+}
+
+/* STEAM */
+
+.steam{
+position:absolute;
+top:-20px;
+left:50%;
+transform:translateX(-50%);
+width:8px;
+height:20px;
+background:rgba(200,200,200,0.6);
+border-radius:50%;
+animation:steamRise 2s infinite ease-in-out;
+}
+
+.steam:nth-child(2){
+left:40%;
+animation-delay:0.5s;
+}
+
+.steam:nth-child(3){
+left:60%;
+animation-delay:1s;
+}
+
+@keyframes steamRise{
+0%{
+opacity:0;
+transform:translateY(0) scale(0.8);
+}
+50%{
+opacity:1;
+}
+100%{
+opacity:0;
+transform:translateY(-40px) scale(1.2);
+}
 }
 
 </style>
@@ -137,18 +182,22 @@ animation:float 6s infinite ease-in-out;
 
 <body>
 
+<!-- Celebration Sound -->
 
-<!-- FLOATING COFFEE ICONS -->
-
-<div class="coffee" style="top:10%;left:10%;">☕</div>
-<div class="coffee" style="top:80%;left:15%;">☕</div>
-<div class="coffee" style="top:20%;right:10%;">☕</div>
-<div class="coffee" style="bottom:15%;right:20%;">☕</div>
-
+<audio id="celebrationSound" autoplay>
+<source src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg" type="audio/ogg">
+</audio>
 
 <!-- SUCCESS CARD -->
 
 <div class="success-card">
+
+<div class="cup">
+☕
+<div class="steam"></div>
+<div class="steam"></div>
+<div class="steam"></div>
+</div>
 
 <div class="checkmark">✔</div>
 
@@ -162,39 +211,69 @@ Your delicious coffee is being prepared with love ☕
 Sit back, relax and enjoy the aroma while we craft your perfect cup!
 </p>
 
-<a href="index.html" class="btn">
-Back to Home
-</a>
+<a href="/" class="btn">Back to Home</a>
 
 </div>
 
-
-<!-- CONFETTI SCRIPT -->
-
 <script>
+
+/* CONFETTI */
 
 function createConfetti(){
 
 for(let i=0;i<80;i++){
 
-let conf=document.createElement("div");
+let conf=document.createElement("div")
 
-conf.classList.add("confetti");
+conf.classList.add("confetti")
 
-conf.style.left=Math.random()*100+"vw";
+conf.style.left=Math.random()*100+"vw"
 
-conf.style.animationDuration=(Math.random()*3+2)+"s";
+conf.style.animationDuration=(Math.random()*3+2)+"s"
 
 conf.style.backgroundColor=
-["#ff9800","#4caf50","#2196f3","#e91e63","#ff5722"][Math.floor(Math.random()*5)];
+["#ff9800","#4caf50","#2196f3","#e91e63","#ff5722"][Math.floor(Math.random()*5)]
 
-document.body.appendChild(conf);
-
-}
+document.body.appendChild(conf)
 
 }
 
-createConfetti();
+}
+
+createConfetti()
+
+/* FIREWORKS */
+
+function createFirework(){
+
+let fire=document.createElement("div")
+
+fire.classList.add("firework")
+
+fire.style.left=Math.random()*100+"vw"
+
+fire.style.top=Math.random()*60+"vh"
+
+document.body.appendChild(fire)
+
+setTimeout(()=>{
+fire.remove()
+},1000)
+
+}
+
+setInterval(createFirework,800)
+
+/* CELEBRATION SOUND CONTROL */
+
+let sound=document.getElementById("celebrationSound")
+
+sound.volume=0.9
+
+setTimeout(()=>{
+sound.pause()
+sound.currentTime=0
+},10000)
 
 </script>
 

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Delivery Confirmed - Coffee Corner</title>
+
+<style>
+
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#fff6ec,#ffe0c2,#ffd9b3);
+overflow:hidden;
+}
+
+/* MAIN CARD */
+
+.success-card{
+background:white;
+padding:50px;
+border-radius:18px;
+box-shadow:0 25px 60px rgba(0,0,0,0.2);
+text-align:center;
+max-width:500px;
+animation:popUp 0.6s ease;
+}
+
+@keyframes popUp{
+from{
+opacity:0;
+transform:scale(0.8);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+/* TITLE */
+
+h2{
+color:#4e342e;
+margin-bottom:10px;
+}
+
+/* MESSAGE */
+
+.message{
+color:#555;
+font-size:16px;
+margin-bottom:15px;
+}
+
+/* DELIVERY TRACK */
+
+.track{
+margin-top:30px;
+position:relative;
+height:80px;
+overflow:hidden;
+}
+
+/* ROAD */
+
+.road{
+position:absolute;
+bottom:20px;
+width:100%;
+height:6px;
+background:#ccc;
+border-radius:5px;
+}
+
+/* BIKE */
+
+.bike{
+position:absolute;
+bottom:10px;
+font-size:45px;
+animation:ride 6s linear infinite;
+}
+
+@keyframes ride{
+
+0%{
+left:-60px;
+}
+
+100%{
+left:110%;
+}
+
+}
+
+/* PROGRESS BAR */
+
+.progress{
+margin-top:25px;
+height:10px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#ff9800,#ff5722);
+animation:load 4s forwards;
+}
+
+@keyframes load{
+
+0%{width:0%}
+
+100%{width:100%}
+
+}
+
+/* BUTTON */
+
+.btn{
+margin-top:25px;
+display:inline-block;
+padding:12px 28px;
+background:#6d4c41;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+transition:0.3s;
+}
+
+.btn:hover{
+background:#4e342e;
+transform:scale(1.05);
+}
+
+/* FLOATING COFFEE ICONS */
+
+.coffee{
+position:absolute;
+font-size:30px;
+animation:float 6s infinite ease-in-out;
+}
+
+@keyframes float{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(-30px)}
+100%{transform:translateY(0)}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- FLOATING COFFEE -->
+
+<div class="coffee" style="top:10%;left:10%;">☕</div>
+<div class="coffee" style="top:80%;left:15%;">☕</div>
+<div class="coffee" style="top:20%;right:10%;">☕</div>
+<div class="coffee" style="bottom:15%;right:20%;">☕</div>
+
+<div class="success-card">
+
+<h2>🚚 Order Confirmed!</h2>
+
+<p class="message">
+Your coffee is on the way ☕
+</p>
+
+<p class="message">
+Our delivery partner is rushing to bring your order fresh and hot!
+</p>
+
+<!-- DELIVERY TRACK -->
+
+<div class="track">
+
+<div class="road"></div>
+
+<div class="bike">
+🏍️
+</div>
+
+</div>
+
+<!-- PROGRESS BAR -->
+
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+
+<a href="/" class="btn">
+Back to Menu
+</a>
+
+</div>
+
+</body>
+</html>

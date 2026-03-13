@@ -3,253 +3,230 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pro Kitchen Command Center</title>
+<title>Kitchen Command Center</title>
 
 <style>
-:root {
-    --bg-dark: #080a0c;
-    --card-bg: #14171c;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --accent-orange: #ff9800;
-    --accent-blue: #00d2ff;
-    --accent-green: #00ff88;
-    --accent-purple: #bf5af2;
-    --accent-red: #ff3b30;
+
+:root{
+--bg-dark:#080a0c;
+--card-bg:#14171c;
+--border-color:rgba(255,255,255,0.08);
+--accent-orange:#ff9800;
+--accent-blue:#00d2ff;
+--accent-green:#00ff88;
+--accent-red:#ff3b30;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,system-ui;
 }
 
-body {
-    background: var(--bg-dark);
-    background-image: radial-gradient(circle at 50% 50%, #1a1e26 0%, #080a0c 100%);
-    color: #e0e0e0;
-    min-height: 100vh;
+body{
+background:var(--bg-dark);
+color:#e0e0e0;
+min-height:100vh;
 }
 
 /* HEADER */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background: rgba(27, 31, 38, 0.8);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 40px;
+background:#111;
+border-bottom:1px solid var(--border-color);
+}
+.header h1{
+font-size:22px;
+background:linear-gradient(to right,#fff,var(--accent-orange));
+
+background-clip:text;
+-webkit-background-clip:text;
+
+color:transparent;
+-webkit-text-fill-color:transparent;
 }
 
-.header h1 {
-    font-size: 22px;
-    letter-spacing: 1px;
-    font-weight: 700;
-    background: linear-gradient(to right, #fff, var(--accent-orange));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+.logout-btn{
+background:transparent;
+border:1px solid var(--accent-red);
+padding:10px 18px;
+color:var(--accent-red);
+border-radius:8px;
+cursor:pointer;
 }
 
-.logout-btn {
-    background: rgba(255, 61, 0, 0.1);
-    border: 1px solid var(--accent-red);
-    padding: 10px 20px;
-    color: var(--accent-red);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
+.logout-btn:hover{
+background:var(--accent-red);
+color:#fff;
 }
 
-.logout-btn:hover {
-    background: var(--accent-red);
-    color: white;
-    box-shadow: 0 0 15px rgba(255, 59, 48, 0.4);
+/* STATS */
+
+.stats{
+display:flex;
+gap:20px;
+padding:30px 40px;
+justify-content:center;
 }
 
-/* STATS PANEL */
-.stats {
-    display: flex;
-    gap: 25px;
-    padding: 30px 40px;
-    justify-content: center;
+.stat-card{
+background:var(--card-bg);
+padding:20px 40px;
+border-radius:14px;
+text-align:center;
+border:1px solid var(--border-color);
 }
 
-.stat-card {
-    background: var(--card-bg);
-    padding: 20px 40px;
-    border-radius: 16px;
-    text-align: center;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    min-width: 180px;
+.stat-card span{
+font-size:12px;
+color:#888;
 }
 
-.stat-card span {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #888;
+.stat-card h2{
+font-size:34px;
+margin-top:5px;
 }
 
-.stat-card h2 {
-    font-size: 36px;
-    margin-top: 8px;
-    font-weight: 800;
-}
+/* SECTION TITLES */
 
-#orderCount { color: #fff; }
-#preparingCount { color: var(--accent-orange); text-shadow: 0 0 10px rgba(255, 152, 0, 0.3); }
-#readyCount { color: var(--accent-green); text-shadow: 0 0 10px rgba(0, 255, 136, 0.3); }
+.section-title{
+padding:20px 40px;
+font-size:22px;
+font-weight:700;
+}
 
 /* ORDERS GRID */
-.orders {
-    padding: 0 40px 40px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 25px;
+
+.orders{
+padding:0 40px 40px;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+gap:20px;
 }
 
 /* ORDER CARD */
-.order-card {
-    background: var(--card-bg);
-    padding: 25px;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
+
+.order-card{
+background:var(--card-bg);
+padding:25px;
+border-radius:18px;
+border:1px solid var(--border-color);
+transition:0.3s;
 }
 
-.order-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(255,255,255,0.2);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+.order-card:hover{
+transform:translateY(-5px);
 }
 
-.order-card h3 {
-    color: #fff;
-    margin-bottom: 15px;
-    font-size: 20px;
-    display: flex;
-    justify-content: space-between;
+.order-card h3{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
 }
 
-.order-card p {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #bbb;
+.timer{
+font-size:13px;
+color:#888;
 }
 
-.order-card b { color: #fff; font-weight: 500; }
-
-/* ITEMS LIST STYLING */
-.items-box {
-    background: rgba(0,0,0,0.2);
-    padding: 12px;
-    border-radius: 10px;
-    margin: 15px 0;
-    border-left: 3px solid var(--accent-orange);
-    color: #eee;
-    font-style: italic;
+.status{
+display:inline-block;
+padding:5px 12px;
+border-radius:8px;
+font-size:11px;
+font-weight:700;
+margin-bottom:10px;
 }
 
-/* TIMER */
-.timer {
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #888;
+.received{background:#0d47a1;color:#fff}
+.preparing{background:#ff9800;color:#000}
+.ready{background:#00ff88;color:#000}
+.delivered{background:#9c27b0;color:#fff}
+
+.delivery-badge{
+display:inline-block;
+margin:8px 0;
+padding:5px 10px;
+background:#00ff88;
+color:#000;
+font-size:11px;
+border-radius:6px;
+font-weight:700;
 }
 
-/* PRIORITY BREATHING ANIMATION */
-@keyframes pulse-red {
-    0% { border-color: rgba(255, 61, 0, 0.2); box-shadow: 0 0 0 rgba(255,61,0,0); }
-    50% { border-color: rgba(255, 61, 0, 0.8); box-shadow: 0 0 20px rgba(255,61,0,0.2); }
-    100% { border-color: rgba(255, 61, 0, 0.2); box-shadow: 0 0 0 rgba(255,61,0,0); }
-}
+/* ITEMS */
 
-.priority {
-    animation: pulse-red 2s infinite;
+.items-box{
+background:#00000033;
+padding:10px;
+border-radius:8px;
+margin:10px 0;
 }
-
-/* STATUS CHIPS */
-.status {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 14px;
-    border-radius: 10px;
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-}
-
-.received { background: rgba(30, 136, 229, 0.15); color: var(--accent-blue); }
-.preparing { background: rgba(255, 152, 0, 0.15); color: var(--accent-orange); }
-.ready { background: rgba(76, 175, 80, 0.15); color: var(--accent-green); }
-.delivered { background: rgba(142, 36, 170, 0.15); color: var(--accent-purple); }
 
 /* CONTROLS */
-.controls {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 20px;
+
+.controls{
+margin-top:15px;
+display:flex;
+flex-direction:column;
+gap:10px;
 }
 
-.status-select {
-    padding: 12px;
-    border-radius: 10px;
-    background: #252a33;
-    color: white;
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    font-weight: 600;
+.status-select{
+padding:10px;
+border-radius:8px;
+background:#252a33;
+color:#fff;
+border:none;
 }
 
-.delete-btn {
-    background: transparent;
-    border: 1px solid rgba(229, 57, 53, 0.3);
-    padding: 10px;
-    color: #e53935;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 13px;
-    transition: 0.3s;
+.delete-btn{
+background:transparent;
+border:1px solid #e53935;
+color:#e53935;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
 }
 
-.delete-btn:hover {
-    background: #e53935;
-    color: white;
+.delete-btn:hover{
+background:#e53935;
+color:#fff;
 }
 
-/* NOTIFICATION POPUP */
-.popup {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    background: var(--accent-orange);
-    color: #000;
-    padding: 20px 35px;
-    border-radius: 15px;
-    display: none;
-    font-weight: 800;
-    z-index: 1000;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    animation: slideIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+.map-btn{
+margin-top:8px;
+padding:7px 10px;
+border:none;
+border-radius:6px;
+background:#00d2ff;
+color:#000;
+font-weight:600;
+cursor:pointer;
 }
 
-@keyframes slideIn {
-    from { transform: translateX(100px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+/* NEW ORDER POPUP */
+
+.popup{
+position:fixed;
+top:30px;
+right:30px;
+background:var(--accent-orange);
+color:#000;
+padding:15px 25px;
+border-radius:10px;
+display:none;
+font-weight:700;
+}
+
+.delete-popup{
+background:#e53935;
+color:white;
 }
 
 </style>
@@ -258,169 +235,239 @@ body {
 <body>
 
 <div class="popup" id="newOrderPopup">
-    🔥 NEW ORDER RECEIVED! 🔥
+🔥 NEW ORDER RECEIVED!
+</div>
+
+<div class="popup delete-popup" id="deletePopup">
+❌ Order Deleted Successfully
 </div>
 
 <div class="header">
-    <h1>KITCHEN COMMAND CENTER</h1>
-    <button class="logout-btn" onclick="logout()">LOGOUT</button>
+<h1>KITCHEN COMMAND CENTER</h1>
+<button class="logout-btn" onclick="logout()">LOGOUT</button>
 </div>
 
 <div class="stats">
-    <div class="stat-card">
-        <span>Total Orders</span>
-        <h2 id="orderCount">0</h2>
-    </div>
-    <div class="stat-card">
-        <span>Preparing</span>
-        <h2 id="preparingCount">0</h2>
-    </div>
-    <div class="stat-card">
-        <span>Ready</span>
-        <h2 id="readyCount">0</h2>
-    </div>
+<div class="stat-card">
+<span>Total Orders</span>
+<h2 id="orderCount">0</h2>
 </div>
 
-<div id="ordersContainer" class="orders"></div>
+<div class="stat-card">
+<span>Preparing</span>
+<h2 id="preparingCount">0</h2>
+</div>
+
+<div class="stat-card">
+<span>Ready</span>
+<h2 id="readyCount">0</h2>
+</div>
+</div>
+
+<h2 class="section-title">☕ Cafe Orders</h2>
+<div id="cafeOrders" class="orders"></div>
+
+<h2 class="section-title">🚚 Home Delivery Orders</h2>
+<div id="deliveryOrders" class="orders"></div>
 
 <audio id="orderSound">
-    <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
+<source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg">
 </audio>
 
-<script>
-let previousOrders = 0;
 
-if(localStorage.getItem("adminLoggedIn") !== "true"){
-    window.location.href="admin-login.html";
+
+
+
+
+
+
+<script>
+
+let previousOrders=0;
+
+if(localStorage.getItem("adminLoggedIn")!=="true"){
+window.location.href="admin-login.html";
 }
 
 function logout(){
-    localStorage.removeItem("adminLoggedIn");
-    window.location.href="admin-login.html";
+localStorage.removeItem("adminLoggedIn");
+window.location.href="admin-login.html";
 }
 
 function getTimer(orderTime){
-    let diff = Math.floor((Date.now() - new Date(orderTime))/60000);
-    return diff + " min";
+let diff=Math.floor((Date.now()-new Date(orderTime))/60000);
+return diff+" min";
 }
 
 function getStatusEmoji(status){
-    const emojis = {
-        'received': '📩 Received',
-        'preparing': '👨‍🍳 Preparing',
-        'ready': '✅ Ready',
-        'delivered': '📦 Delivered'
-    };
-    return emojis[status.toLowerCase()] || status;
+const emojis={
+received:"📩 Received",
+preparing:"👨‍🍳 Preparing",
+ready:"✅ Ready",
+delivered:"📦 Delivered"
+};
+return emojis[status] || status;
 }
-
-
-
 
 function loadOrders(){
-    fetch("/orders")
-    .then(res => res.json())
-    .then(orders => {
-        let container = document.getElementById("ordersContainer");
-        container.innerHTML = "";
-        
-        // 1. First, sort by time (Oldest to Newest) to determine the correct Sequence #
-        orders.sort((a, b) => new Date(a.order_time) - new Date(b.order_time));
 
-        // 2. Map the orders to include their sequence number BEFORE we reverse them
-        let ordersWithSequence = orders.map((order, index) => {
-            return { ...order, sequenceNum: index + 1 };
-        });
+fetch("/orders")
+.then(res=>res.json())
+.then(orders=>{
 
-        // 3. Now REVERSE the array so the most recent order is at the top of the list
-        ordersWithSequence.reverse();
+let cafeContainer=document.getElementById("cafeOrders");
+let deliveryContainer=document.getElementById("deliveryOrders");
 
-        document.getElementById("orderCount").innerText = orders.length;
+cafeContainer.innerHTML="";
+deliveryContainer.innerHTML="";
 
-        let preparing = 0;
-        let ready = 0;
+document.getElementById("orderCount").innerText=orders.length;
 
-        if(orders.length > previousOrders){
-            document.getElementById("orderSound").play();
-            let popup = document.getElementById("newOrderPopup");
-            popup.style.display = "block";
-            setTimeout(() => { popup.style.display = "none"; }, 4000);
-        }
+let preparing=0;
+let ready=0;
 
-        previousOrders = orders.length;
-
-        ordersWithSequence.forEach((order) => {
-            if(order.order_status === "preparing") preparing++;
-            if(order.order_status === "ready") ready++;
-
-            let wait = Math.floor((Date.now() - new Date(order.order_time)) / 60000);
-            let priorityClass = wait > 5 ? "priority" : "";
-            let statusClass = order.order_status.toLowerCase();
-
-            container.innerHTML += `
-                <div class="order-card ${priorityClass}">
-                    <h3>Order #${order.sequenceNum} <span class="timer">🕒 ${getTimer(order.order_time)}</span></h3>
-                    
-                    <span class="status ${statusClass}">
-                        ${getStatusEmoji(order.order_status)}
-                    </span>
-
-                    <p><b>Customer:</b> ${order.customer_name}</p>
-                    <p><b>Phone:</b> ${order.phone}</p>
-                    <p><b>Table:</b> ${order.table_number || "N/A"}</p>
-                    
-                    <div class="items-box">
-                        ${order.items}
-                    </div>
-
-                    <div class="controls">
-                        <select class="status-select" onchange="updateStatus(${order.order_id}, this.value)">
-                            <option value="received" ${order.order_status === "received" ? "selected" : ""}>Received</option>
-                            <option value="preparing" ${order.order_status === "preparing" ? "selected" : ""}>Preparing</option>
-                            <option value="ready" ${order.order_status === "ready" ? "selected" : ""}>Ready</option>
-                            <option value="delivered" ${order.order_status === "delivered" ? "selected" : ""}>Delivered</option>
-                        </select>
-                        
-                        <button class="delete-btn" onclick="deleteOrder(${order.order_id})">
-                            Delete Order
-                        </button>
-                    </div>
-                </div>
-            `;
-        });
-
-        document.getElementById("preparingCount").innerText = preparing;
-        document.getElementById("readyCount").innerText = ready;
-    });
+if(orders.length>previousOrders){
+document.getElementById("orderSound").play();
+let popup=document.getElementById("newOrderPopup");
+popup.style.display="block";
+setTimeout(()=>popup.style.display="none",4000);
 }
 
+previousOrders=orders.length;
 
-function updateStatus(orderId,status){
-    fetch(`/update-status/${orderId}`,{
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({status})
-    }).then(()=>loadOrders());
+/* SORT BY TIME (OLDEST FIRST) */
+orders.sort((a,b)=> new Date(a.order_time)-new Date(b.order_time));
+
+/* ASSIGN SEQUENCE NUMBER */
+let ordersWithSequence=orders.map((order,index)=>{
+return {...order,sequence:index+1};
+});
+
+/* SHOW LATEST FIRST */
+ordersWithSequence.reverse();
+
+ordersWithSequence.forEach(order=>{
+
+let targetContainer=
+order.order_type==="delivery"
+?deliveryContainer
+:cafeContainer;
+
+if(order.order_status==="preparing") preparing++;
+if(order.order_status==="ready") ready++;
+
+let statusClass=order.order_status;
+
+targetContainer.innerHTML+=`
+
+<div class="order-card">
+
+<h3>
+Order #${order.sequence}
+<span class="timer">🕒 ${getTimer(order.order_time)}</span>
+</h3>
+
+<span class="status ${statusClass}">
+${getStatusEmoji(order.order_status)}
+</span>
+
+${order.order_type==="delivery"
+?`<span class="delivery-badge">🚚 Delivery Order</span>`
+:`<span class="delivery-badge">☕ Cafe Order</span>`
 }
 
-function deleteOrder(orderId){
-    if(!confirm("Are you sure you want to delete this order?")) return;
-    
-    fetch(`/delete-order/${orderId}`, { 
-        method: "DELETE" 
-    })
-    .then(response => {
-        if(response.ok) {
-            loadOrders(); // Refresh the list
-        } else {
-            alert("Delete failed. Make sure you updated server.js too!");
-        }
-    })
-    .catch(err => console.error("Error:", err));
+<p><b>Customer:</b> ${order.customer_name}</p>
+<p><b>Phone:</b> ${order.phone}</p>
+
+${order.order_type==="delivery"
+?`
+<p><b>Address:</b> ${order.address}, ${order.city} - ${order.pincode}</p>
+
+<button class="map-btn"
+onclick="openMap('${order.address} ${order.city} ${order.pincode}')">
+📍 Open Location
+</button>
+`
+:`
+<p><b>Table:</b> ${order.table_number || "N/A"}</p>
+`
+}
+
+<div class="items-box">
+${order.items_list || "No items"}
+</div>
+
+<div class="controls">
+
+<select class="status-select"
+onchange="updateStatus(${order.order_id},this.value)">
+
+<option value="received" ${order.order_status==="received"?"selected":""}>Received</option>
+<option value="preparing" ${order.order_status==="preparing"?"selected":""}>Preparing</option>
+<option value="ready" ${order.order_status==="ready"?"selected":""}>Ready</option>
+<option value="delivered" ${order.order_status==="delivered"?"selected":""}>Delivered</option>
+
+</select>
+
+<button class="delete-btn"
+onclick="deleteOrder(${order.order_id})">
+Delete Order
+</button>
+
+</div>
+
+</div>
+`;
+
+});
+
+document.getElementById("preparingCount").innerText=preparing;
+document.getElementById("readyCount").innerText=ready;
+
+});
+
+}
+
+function updateStatus(id,status){
+
+fetch(`/update-status/${id}`,{
+method:"PUT",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({status})
+})
+.then(()=>loadOrders());
+
+}
+
+function deleteOrder(id){
+
+fetch(`/delete-order/${id}`,{method:"DELETE"})
+.then(()=>{
+
+loadOrders();
+
+let popup=document.getElementById("deletePopup");
+
+popup.style.display="block";
+
+setTimeout(()=>{
+popup.style.display="none";
+},3000);
+
+});
+
+}
+
+function openMap(address){
+
+let url=`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+window.open(url,"_blank");
+
 }
 
 loadOrders();
 setInterval(loadOrders,3000);
+
 </script>
 
 </body>

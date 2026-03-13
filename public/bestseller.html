@@ -9,40 +9,29 @@
 
 <body>
 
-
-
-
-
-
-
 <!-- NAVBAR -->
+
 <nav class="navbar">
 
 <div class="logo">Coffee Corner</div>
 
 <ul class="nav-links">
-<li><a href="index.html">Home</a></li>
-<li><a href="bestseller.html" class="active">Bestseller</a></li>
-<li><a href="drinks.html">Drinks</a></li>
-<li><a href="food.html">Food</a></li>
-<li><a href="power-picks.html">Power Picks</a></li>
-<li><a href="coffee-home.html">Coffee at Home</a></li>
-<li><a href="ready-to-eat.html">Ready to Eat</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/bestseller" class="active">Bestseller</a></li>
+<li><a href="/drinks">Drinks</a></li>
+<li><a href="/food">Food</a></li>
+<li><a href="/power-picks">Power Picks</a></li>
+<li><a href="/coffee-home">Coffee at Home</a></li>
+<li><a href="/ready-to-eat">Ready to Eat</a></li>
 </ul>
 
-
-
-
-
-
-
-
-
 <div class="search-profile">
+
 <input type="text" placeholder="Looking for something specific?">
+
 <span class="profile-icon">👤</span>
 
-<div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">
+<div class="cart" id="cart-icon" onclick="window.location.href='/cart-page'">
 🛒 <span id="cart-count">0</span>
 </div>
 
@@ -52,6 +41,7 @@
 
 
 <!-- MENU SECTION -->
+
 <section class="menu-section">
 
 <h2>Bestseller</h2>
@@ -63,14 +53,18 @@
 <div class="menu-card" data-name="Pink Drink" data-price="388.50">
 
 <div class="image-box">
-<img src="images/pink-drink.jpg" alt="Pink Drink">
+<img src="images/pink-drink.jpg">
 </div>
 
 <div class="card-content">
 <h3>Pink Drink</h3>
 <p class="desc">A vibrant mix of strawberry açaí and coconut flavors.</p>
 <p class="price">₹ 388.50</p>
-<button class="btn add-to-cart">Add Item</button>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
 </div>
 
 </div>
@@ -79,14 +73,23 @@
 <div class="menu-card" data-name="Cappuccino" data-price="325.50">
 
 <div class="image-box">
-<img src="images/cappuccino.jpg" alt="Cappuccino">
+<img src="images/cappuccino.jpg">
 </div>
 
 <div class="card-content">
+
 <h3>Cappuccino</h3>
-<p class="desc">Dark, rich espresso under a smooth layer of foam.</p>
+
+<p class="desc">
+Dark, rich espresso under a smooth layer of foam.
+</p>
+
 <p class="price">₹ 325.50</p>
-<button class="btn add-to-cart">Add Item</button>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
 </div>
 
 </div>
@@ -99,10 +102,19 @@
 </div>
 
 <div class="card-content">
+
 <h3>Double Chocolate Chip Frappuccino</h3>
-<p class="desc">Rich mocha sauce blended with chocolaty chips.</p>
+
+<p class="desc">
+Rich mocha sauce blended with chocolaty chips.
+</p>
+
 <p class="price">₹ 462.00</p>
-<button class="btn add-to-cart">Add Item</button>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
 </div>
 
 </div>
@@ -115,10 +127,19 @@
 </div>
 
 <div class="card-content">
+
 <h3>Caffe Americano</h3>
-<p class="desc">Full-bodied espresso with hot water.</p>
+
+<p class="desc">
+Full-bodied espresso with hot water.
+</p>
+
 <p class="price">₹ 309.75</p>
-<button class="btn add-to-cart">Add Item</button>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
 </div>
 
 </div>
@@ -131,10 +152,19 @@
 </div>
 
 <div class="card-content">
+
 <h3>Java Chip Frappuccino</h3>
-<p class="desc">Mocha sauce and chips blended with coffee & milk.</p>
+
+<p class="desc">
+Mocha sauce and chips blended with coffee & milk.
+</p>
+
 <p class="price">₹ 441.00</p>
-<button class="btn add-to-cart">Add Item</button>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
 </div>
 
 </div>
@@ -147,13 +177,23 @@
 </div>
 
 <div class="card-content">
+
 <h3>Cold Coffee</h3>
-<p class="desc">Everyone’s favorite indulgence, crafted expertly.</p>
+
+<p class="desc">
+Everyone’s favorite indulgence, crafted expertly.
+</p>
+
 <p class="price">₹ 404.25</p>
-<button class="btn add-to-cart">Add Item</button>
+
+<button class="btn add-to-cart">
+Add Item
+</button>
+
 </div>
 
 </div>
+
 
 </div>
 
@@ -164,7 +204,7 @@
 <p>An average active adult requires 2,000 kcal energy per day.</p>
 </footer>
 
-<div id="notification" class="notification"></div>
+<div id="notification"></div>
 
 <script src="cart.js"></script>
 

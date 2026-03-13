@@ -1,197 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Corner - Full Menu</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        :root { --accent: #006241; --text: #1e1e1e; }
-        .master-menu-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .menu-header { text-align: center; margin-bottom: 40px; }
-        .search-container { text-align: center; margin-bottom: 50px; }
-        #menuSearch { 
-            width: 100%; max-width: 600px; padding: 15px 25px; 
-            border-radius: 30px; border: 1px solid #ddd; 
-            font-size: 1rem; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            outline: none; transition: 0.3s;
-        }
-        #menuSearch:focus { border-color: var(--accent); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Corner - Full Menu</title>
+<link rel="stylesheet" href="style.css">
 
-        .master-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-        }
+<style>
+:root { --accent:#006241; --text:#1e1e1e; }
 
-        .menu-card {
-            background: #fff; border-radius: 12px; overflow: hidden;
-            border: 1px solid #f0f0f0; display: flex; flex-direction: column;
-            transition: 0.3s ease; height: 100%;
-        }
-        .menu-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
-        .image-box { width: 100%; height: 200px; background: #f9f9f9; }
-        .image-box img { width: 100%; height: 100%; object-fit: cover; }
-        .card-content { padding: 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-content h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text); min-height: 44px; display: flex; align-items: center; justify-content: center; }
-        .desc { font-size: 0.85rem; color: #666; margin-bottom: 15px; min-height: 34px; }
-        .price { font-weight: 700; font-size: 1.1rem; color: var(--accent); margin-top: auto; margin-bottom: 15px; }
-        .add-to-cart {
-            background: var(--accent); color: white; border: none;
-            padding: 12px; border-radius: 25px; cursor: pointer;
-            font-weight: 600; width: 100%; transition: 0.3s;
-        }
-        .add-to-cart:hover { background: #004d33; }
-    </style>
+.master-menu-container{
+max-width:1200px;
+margin:40px auto;
+padding:0 20px;
+font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+.menu-header{text-align:center;margin-bottom:40px;}
+
+.search-container{text-align:center;margin-bottom:50px;}
+
+#menuSearch{
+width:100%;
+max-width:600px;
+padding:15px 25px;
+border-radius:30px;
+border:1px solid #ddd;
+font-size:1rem;
+box-shadow:0 4px 10px rgba(0,0,0,0.05);
+outline:none;
+transition:.3s;
+}
+
+#menuSearch:focus{border-color:var(--accent);}
+
+.master-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+gap:25px;
+}
+
+.menu-card{
+background:#fff;
+border-radius:12px;
+overflow:hidden;
+border:1px solid #f0f0f0;
+display:flex;
+flex-direction:column;
+transition:.3s ease;
+}
+
+.menu-card:hover{
+transform:translateY(-5px);
+box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+.image-box{width:100%;height:200px;background:#f9f9f9;}
+.image-box img{width:100%;height:100%;object-fit:cover;}
+
+.card-content{
+padding:20px;
+text-align:center;
+display:flex;
+flex-direction:column;
+flex-grow:1;
+}
+
+.card-content h3{
+font-size:1.1rem;
+margin-bottom:8px;
+color:var(--text);
+}
+
+.desc{font-size:.85rem;color:#666;margin-bottom:15px;}
+
+.price{
+font-weight:700;
+font-size:1.1rem;
+color:var(--accent);
+margin-top:auto;
+margin-bottom:15px;
+}
+
+.add-to-cart{
+background:var(--accent);
+color:white;
+border:none;
+padding:12px;
+border-radius:25px;
+cursor:pointer;
+font-weight:600;
+width:100%;
+}
+
+.add-to-cart:hover{background:#004d33;}
+
+/* SUCCESS NOTIFICATION */
+
+.cart-toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#2e7d32;
+color:white;
+padding:14px 22px;
+border-radius:10px;
+font-weight:600;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+display:none;
+z-index:9999;
+animation:slideIn .4s ease;
+}
+
+@keyframes slideIn{
+from{transform:translateX(80px);opacity:0;}
+to{transform:translateX(0);opacity:1;}
+}
+</style>
 </head>
+
 <body>
 
+<div id="cartToast" class="cart-toast">
+✅ Item added to cart
+</div>
+
 <nav class="navbar">
-    <div class="logo">Coffee Corner</div>
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="full-menu.html" class="active">Full Menu</a></li>
-    </ul>
-    <div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">
-        🛒 <span id="cart-count">0</span>
-    </div>
+<div class="logo">Coffee Corner</div>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="full-menu.html" class="active">Full Menu</a></li>
+</ul>
+
+<div class="cart" id="cart-icon" onclick="window.location.href='cart.html'">
+🛒 <span id="cart-count">0</span>
+</div>
 </nav>
 
 <main class="master-menu-container">
-    <div class="menu-header">
-        <h1>Our Complete Menu</h1>
-        <p>Browse all 26 handcrafted selections</p>
-    </div>
 
-    <div class="search-container">
-        <input type="text" id="menuSearch" placeholder="Search our 26 items..." onkeyup="filterMenu()">
-    </div>
+<div class="menu-header">
+<h1>Our Complete Menu</h1>
+<p>Browse all 26 handcrafted selections</p>
+</div>
 
-    <div class="master-grid" id="menuGrid">
-        
-        <div class="menu-card" data-name="Pink Drink" data-price="388.50">
-            <div class="image-box"><img src="images/pink-drink.jpg"></div>
-            <div class="card-content"><h3>Pink Drink</h3><p class="desc">Strawberry açaí and coconut flavors.</p><p class="price">₹ 388.50</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Cappuccino" data-price="325.50">
-            <div class="image-box"><img src="images/cappuccino.jpg"></div>
-            <div class="card-content"><h3>Cappuccino</h3><p class="desc">Dark espresso under smooth foam.</p><p class="price">₹ 325.50</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Double Chocolate Chip Frappuccino" data-price="462.00">
-            <div class="image-box"><img src="images/double-choco-frappuccino.jpg"></div>
-            <div class="card-content"><h3>Double Choco Frappuccino</h3><p class="desc">Mocha sauce and chocolate chips.</p><p class="price">₹ 462.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Caffe Americano" data-price="309.75">
-            <div class="image-box"><img src="images/caffe-americano.jpg"></div>
-            <div class="card-content"><h3>Caffe Americano</h3><p class="desc">Full-bodied espresso with hot water.</p><p class="price">₹ 309.75</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Java Chip Frappuccino" data-price="441.00">
-            <div class="image-box"><img src="images/java-chip-frappuccino.jpg"></div>
-            <div class="card-content"><h3>Java Chip Frappuccino</h3><p class="desc">Mocha sauce and chips blended with coffee.</p><p class="price">₹ 441.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Cold Coffee" data-price="404.25">
-            <div class="image-box"><img src="images/cold-coffee.jpg"></div>
-            <div class="card-content"><h3>Cold Coffee</h3><p class="desc">Everyone's favorite indulgence.</p><p class="price">₹ 404.25</p><button class="add-to-cart">Add Item</button></div>
-        </div>
+<div class="search-container">
+<input type="text" id="menuSearch" placeholder="Search our 26 items..." onkeyup="filterMenu()">
+</div>
 
-        <div class="menu-card" data-name="Vienna Creamy Latte" data-price="350">
-            <div class="image-box"><img src="images/vienna-latte.jpg"></div>
-            <div class="card-content"><h3>Vienna Creamy Latte</h3><p class="desc">Smooth espresso with whipped delight.</p><p class="price">₹ 350.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Iced Vienna Creamy Latte" data-price="370">
-            <div class="image-box"><img src="images/iced-vienna-latte.jpg"></div>
-            <div class="card-content"><h3>Iced Vienna Latte</h3><p class="desc">Chilled espresso with whipped topping.</p><p class="price">₹ 370.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Classic Iced Coffee" data-price="280">
-            <div class="image-box"><img src="images/classic-iced-coffee.jpg"></div>
-            <div class="card-content"><h3>Classic Iced Coffee</h3><p class="desc">Brewed coffee served chilled over ice.</p><p class="price">₹ 280.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Honey Almond Flat White" data-price="390">
-            <div class="image-box"><img src="images/honey-almond-flatwhite.jpg"></div>
-            <div class="card-content"><h3>Honey Almond Flat White</h3><p class="desc">Almond milk and honey sweetness.</p><p class="price">₹ 390.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
+<div class="master-grid" id="menuGrid">
 
-        <div class="menu-card" data-name="Avocado Panini Sandwich" data-price="250">
-            <div class="image-box"><img src="images/avocado-panini.jpg"></div>
-            <div class="card-content"><h3>Avocado Panini</h3><p class="desc">Fresh avocado in a toasted panini.</p><p class="price">₹ 250.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Chicken Ham Croissant Sandwich" data-price="320">
-            <div class="image-box"><img src="images/chicken-ham-croissant.jpg"></div>
-            <div class="card-content"><h3>Chicken Ham Croissant</h3><p class="desc">Ham and cheese in buttery croissant.</p><p class="price">₹ 320.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Mushroom Bahn Mi" data-price="280">
-            <div class="image-box"><img src="images/mushroom-bahnmi.jpg"></div>
-            <div class="card-content"><h3>Mushroom Bahn Mi</h3><p class="desc">Vietnamese-style savory mushrooms.</p><p class="price">₹ 280.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Pepper Chicken Bahn Mi" data-price="300">
-            <div class="image-box"><img src="images/pepper-chicken-bahnmi.jpg"></div>
-            <div class="card-content"><h3>Pepper Chicken Bahn Mi</h3><p class="desc">Spicy pepper chicken roll.</p><p class="price">₹ 300.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
+<!-- 26 MENU ITEMS -->
 
-        <div class="menu-card" data-name="Tall Iced Caramel Latte Unsweetened" data-price="320">
-            <div class="image-box"><img src="images/iced-caramel-latte.jpg"></div>
-            <div class="card-content"><h3>Iced Caramel Latte</h3><p class="desc">Smooth espresso and caramel flavor.</p><p class="price">₹ 320.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Tall Cold Brew with Chocolate Protein Foam" data-price="350">
-            <div class="image-box"><img src="images/coldbrew-protein.jpg"></div>
-            <div class="card-content"><h3>Protein Cold Brew</h3><p class="desc">Cold brew with chocolate protein foam.</p><p class="price">₹ 350.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Tall Iced Vanilla Latte with Vanilla Protein Foam" data-price="340">
-            <div class="image-box"><img src="images/iced-vanilla-latte.jpg"></div>
-            <div class="card-content"><h3>Vanilla Protein Latte</h3><p class="desc">Iced latte with vanilla protein foam.</p><p class="price">₹ 340.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Short Hazelnut Flat White Unsweetened" data-price="300">
-            <div class="image-box"><img src="images/hazelnut-flatwhite.jpg"></div>
-            <div class="card-content"><h3>Hazelnut Flat White</h3><p class="desc">Espresso with subtle hazelnut.</p><p class="price">₹ 300.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
+<div class="menu-card" data-name="Pink Drink" data-price="388.50">
+<div class="image-box"><img src="images/pink-drink.jpg"></div>
+<div class="card-content">
+<h3>Pink Drink</h3>
+<p class="desc">Strawberry açaí and coconut flavors.</p>
+<p class="price">₹ 388.50</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
 
-        <div class="menu-card" data-name="Almond Biscotti - 50g" data-price="150">
-            <div class="image-box"><img src="images/almond-biscotti.jpg"></div>
-            <div class="card-content"><h3>Almond Biscotti</h3><p class="desc">Crunchy almond-flavored snack.</p><p class="price">₹ 150.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Cranberry Biscotti - 50g" data-price="160">
-            <div class="image-box"><img src="images/cranberry-biscotti.jpg"></div>
-            <div class="card-content"><h3>Cranberry Biscotti</h3><p class="desc">Sweet and tangy cranberry taste.</p><p class="price">₹ 160.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Roasted & Salted Almond 50gms" data-price="200">
-            <div class="image-box"><img src="images/roasted-salted-almond.jpg"></div>
-            <div class="card-content"><h3>Roasted Salted Almonds</h3><p class="desc">Premium roasted crunchy almonds.</p><p class="price">₹ 200.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Salted Almond Chocolate Bites - 50g" data-price="220">
-            <div class="image-box"><img src="images/salted-almond-chocolate.jpg"></div>
-            <div class="card-content"><h3>Almond Chocolate Bites</h3><p class="desc">Chocolate bites with salted almonds.</p><p class="price">₹ 220.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
+<div class="menu-card" data-name="Cappuccino" data-price="325.50">
+<div class="image-box"><img src="images/cappuccino.jpg"></div>
+<div class="card-content">
+<h3>Cappuccino</h3>
+<p class="desc">Dark espresso under smooth foam.</p>
+<p class="price">₹ 325.50</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
 
-        <div class="menu-card" data-name="Diwali Blend 250g Pack" data-price="450">
-            <div class="image-box"><img src="images/diwali-blend.jpg"></div>
-            <div class="card-content"><h3>Diwali Blend 250g</h3><p class="desc">Festive blend for celebrations.</p><p class="price">₹ 450.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="India Estates Blend 150 G" data-price="350">
-            <div class="image-box"><img src="images/india-estates-blend.jpg"></div>
-            <div class="card-content"><h3>India Estates Blend</h3><p class="desc">Sourced from premium Indian estates.</p><p class="price">₹ 350.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Karadibetta Estate 150 G" data-price="380">
-            <div class="image-box"><img src="images/karadibetta-estate.jpg"></div>
-            <div class="card-content"><h3>Karadibetta Estate</h3><p class="desc">Aromatic single-origin coffee.</p><p class="price">₹ 380.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
-        <div class="menu-card" data-name="Italian Roast 150 G" data-price="400">
-            <div class="image-box"><img src="images/italian-roast.jpg"></div>
-            <div class="card-content"><h3>Italian Roast 150g</h3><p class="desc">Dark roasted bold Italian flavor.</p><p class="price">₹ 400.00</p><button class="add-to-cart">Add Item</button></div>
-        </div>
+<div class="menu-card" data-name="Double Chocolate Chip Frappuccino" data-price="462.00">
+<div class="image-box"><img src="images/double-choco-frappuccino.jpg"></div>
+<div class="card-content">
+<h3>Double Choco Frappuccino</h3>
+<p class="desc">Mocha sauce and chocolate chips.</p>
+<p class="price">₹ 462.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
 
-    </div>
+<div class="menu-card" data-name="Caffe Americano" data-price="309.75">
+<div class="image-box"><img src="images/caffe-americano.jpg"></div>
+<div class="card-content">
+<h3>Caffe Americano</h3>
+<p class="desc">Full-bodied espresso with hot water.</p>
+<p class="price">₹ 309.75</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Java Chip Frappuccino" data-price="441.00">
+<div class="image-box"><img src="images/java-chip-frappuccino.jpg"></div>
+<div class="card-content">
+<h3>Java Chip Frappuccino</h3>
+<p class="desc">Mocha sauce and chips blended with coffee.</p>
+<p class="price">₹ 441.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Cold Coffee" data-price="404.25">
+<div class="image-box"><img src="images/cold-coffee.jpg"></div>
+<div class="card-content">
+<h3>Cold Coffee</h3>
+<p class="desc">Everyone's favorite indulgence.</p>
+<p class="price">₹ 404.25</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Vienna Creamy Latte" data-price="350">
+<div class="image-box"><img src="images/vienna-latte.jpg"></div>
+<div class="card-content">
+<h3>Vienna Creamy Latte</h3>
+<p class="desc">Smooth espresso with whipped delight.</p>
+<p class="price">₹ 350.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Iced Vienna Creamy Latte" data-price="370">
+<div class="image-box"><img src="images/iced-vienna-latte.jpg"></div>
+<div class="card-content">
+<h3>Iced Vienna Latte</h3>
+<p class="desc">Chilled espresso with whipped topping.</p>
+<p class="price">₹ 370.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Classic Iced Coffee" data-price="280">
+<div class="image-box"><img src="images/classic-iced-coffee.jpg"></div>
+<div class="card-content">
+<h3>Classic Iced Coffee</h3>
+<p class="desc">Brewed coffee served chilled over ice.</p>
+<p class="price">₹ 280.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Honey Almond Flat White" data-price="390">
+<div class="image-box"><img src="images/honey-almond-flatwhite.jpg"></div>
+<div class="card-content">
+<h3>Honey Almond Flat White</h3>
+<p class="desc">Almond milk and honey sweetness.</p>
+<p class="price">₹ 390.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Avocado Panini Sandwich" data-price="250">
+<div class="image-box"><img src="images/avocado-panini.jpg"></div>
+<div class="card-content">
+<h3>Avocado Panini</h3>
+<p class="desc">Fresh avocado in a toasted panini.</p>
+<p class="price">₹ 250.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Chicken Ham Croissant Sandwich" data-price="320">
+<div class="image-box"><img src="images/chicken-ham-croissant.jpg"></div>
+<div class="card-content">
+<h3>Chicken Ham Croissant</h3>
+<p class="desc">Ham and cheese in buttery croissant.</p>
+<p class="price">₹ 320.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Mushroom Bahn Mi" data-price="280">
+<div class="image-box"><img src="images/mushroom-bahnmi.jpg"></div>
+<div class="card-content">
+<h3>Mushroom Bahn Mi</h3>
+<p class="desc">Vietnamese-style savory mushrooms.</p>
+<p class="price">₹ 280.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<div class="menu-card" data-name="Pepper Chicken Bahn Mi" data-price="300">
+<div class="image-box"><img src="images/pepper-chicken-bahnmi.jpg"></div>
+<div class="card-content">
+<h3>Pepper Chicken Bahn Mi</h3>
+<p class="desc">Spicy pepper chicken roll.</p>
+<p class="price">₹ 300.00</p>
+<button class="add-to-cart">Add Item</button>
+</div>
+</div>
+
+<!-- remaining nuts & coffee packs -->
+
+<div class="menu-card" data-name="Almond Biscotti - 50g" data-price="150">
+<div class="image-box"><img src="images/almond-biscotti.jpg"></div>
+<div class="card-content"><h3>Almond Biscotti</h3><p class="desc">Crunchy almond snack.</p><p class="price">₹150</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="Cranberry Biscotti - 50g" data-price="160">
+<div class="image-box"><img src="images/cranberry-biscotti.jpg"></div>
+<div class="card-content"><h3>Cranberry Biscotti</h3><p class="desc">Sweet cranberry snack.</p><p class="price">₹160</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="Roasted & Salted Almond 50gms" data-price="200">
+<div class="image-box"><img src="images/roasted-salted-almond.jpg"></div>
+<div class="card-content"><h3>Roasted Almonds</h3><p class="desc">Crunchy salted almonds.</p><p class="price">₹200</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="Salted Almond Chocolate Bites - 50g" data-price="220">
+<div class="image-box"><img src="images/salted-almond-chocolate.jpg"></div>
+<div class="card-content"><h3>Chocolate Almond Bites</h3><p class="desc">Chocolate with almonds.</p><p class="price">₹220</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="Diwali Blend 250g Pack" data-price="450">
+<div class="image-box"><img src="images/diwali-blend.jpg"></div>
+<div class="card-content"><h3>Diwali Blend</h3><p class="desc">Festive coffee blend.</p><p class="price">₹450</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="India Estates Blend 150 G" data-price="350">
+<div class="image-box"><img src="images/india-estates-blend.jpg"></div>
+<div class="card-content"><h3>India Estates Blend</h3><p class="desc">Premium Indian coffee.</p><p class="price">₹350</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="Karadibetta Estate 150 G" data-price="380">
+<div class="image-box"><img src="images/karadibetta-estate.jpg"></div>
+<div class="card-content"><h3>Karadibetta Estate</h3><p class="desc">Single origin coffee.</p><p class="price">₹380</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+<div class="menu-card" data-name="Italian Roast 150 G" data-price="400">
+<div class="image-box"><img src="images/italian-roast.jpg"></div>
+<div class="card-content"><h3>Italian Roast</h3><p class="desc">Bold Italian roast.</p><p class="price">₹400</p><button class="add-to-cart">Add Item</button></div>
+</div>
+
+</div>
 </main>
 
 <script>
-    function filterMenu() {
-        let input = document.getElementById('menuSearch').value.toLowerCase();
-        let cards = document.getElementsByClassName('menu-card');
-        for (let i = 0; i < cards.length; i++) {
-            let name = cards[i].getAttribute('data-name').toLowerCase();
-            cards[i].style.display = name.includes(input) ? "" : "none";
-        }
-    }
+function filterMenu(){
+let input=document.getElementById('menuSearch').value.toLowerCase()
+let cards=document.getElementsByClassName('menu-card')
+for(let i=0;i<cards.length;i++){
+let name=cards[i].getAttribute('data-name').toLowerCase()
+cards[i].style.display=name.includes(input)?"":"none"
+}
+}
+
+function showToast(){
+const toast=document.getElementById("cartToast")
+toast.style.display="block"
+setTimeout(()=>{toast.style.display="none"},3000)
+}
+
+document.addEventListener("click",function(e){
+if(e.target.classList.contains("add-to-cart")){
+setTimeout(showToast,300)
+}
+})
 </script>
+
 <script src="cart.js"></script>
+
 </body>
 </html>

@@ -5,8 +5,9 @@ const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 10000;
+
 ///////////////////////////////////////////////////////////
-// MIDDLEWARE
+// 1. MIDDLEWARE CONFIGURATION
 ///////////////////////////////////////////////////////////
 
 app.use(express.json());
@@ -15,281 +16,283 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 ///////////////////////////////////////////////////////////
-// MYSQL CONNECTION
+// 2. DATABASE CONNECTION (MySQL)
 ///////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT,
-  ssl: {
-    rejectUnauthorized: false 
-  }
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "Harshu@2005",
+  database: process.env.DB_NAME || "coffee_corner",
+  port: process.env.DB_PORT || 3306
 });
-
-// This function creates your tables automatically
-const initDB = () => {
-    const queries = [
-        `CREATE TABLE IF NOT EXISTS cart_items (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL, price DECIMAL(10,2) NOT NULL)`,
-        `CREATE TABLE IF NOT EXISTS orders (order_id INT AUTO_INCREMENT PRIMARY KEY, customer_name VARCHAR(255) NOT NULL, phone VARCHAR(20) NOT NULL, table_number VARCHAR(10), total_amount DECIMAL(10,2), order_status VARCHAR(50) DEFAULT 'received', order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)`,
-        `CREATE TABLE IF NOT EXISTS order_items (id INT AUTO_INCREMENT PRIMARY KEY, order_id INT, item_name VARCHAR(255), price DECIMAL(10,2), FOREIGN KEY (order_id) REFERENCES orders(order_id))`
-    ];
-
-    queries.forEach(query => {
-        db.query(query, (err) => {
-            if (err) console.error("❌ Table error:", err);
-            else console.log("✅ Table checked/ready");
-        });
-    });
-};
 
 db.connect((err) => {
-    if (err) {
-        console.error('❌ Database connection failed:', err);
-    } else {
-        console.log('✅ Connected to MySQL Database');
-        initDB(); // This starts the table creation
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////
-// CART APIs
-///////////////////////////////////////////////////////////
-
-// Add item to cart
-app.post("/cart", (req, res) => {
-  const { name, price } = req.body;
-  if (!name || !price) {
-    return res.status(400).json({ message: "Name and price required" });
+  if (err) {
+    console.error("❌ CRITICAL: MySQL Connection Failed!");
+    console.error("Error Details:", err.message);
+  } else {
+    console.log("✅ SUCCESS: Connected to MySQL Database");
+    initDB();
   }
-  const sql = "INSERT INTO cart_items (name, price) VALUES (?, ?)";
-  db.query(sql, [name, price], (err, result) => {
-    if (err) {
-      console.error("❌ Cart Insert Error:", err);
-      return res.status(500).json({ message: "Database error" });
-    }
-    res.json({ success: true, id: result.insertId });
-  });
-});
-
-// Get cart items
-app.get("/cart", (req, res) => {
-  const sql = "SELECT * FROM cart_items ORDER BY id DESC";
-  db.query(sql, (err, results) => {
-    if (err) {
-      console.error("❌ Cart Fetch Error:", err);
-      return res.status(500).json({ message: "Database error" });
-    }
-    res.json(results);
-  });
-});
-
-// Remove single cart item
-app.delete("/cart/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "DELETE FROM cart_items WHERE id=?";
-  db.query(sql, [id], (err) => {
-    if (err) {
-      console.error("❌ Cart Delete Error:", err);
-      return res.status(500).json({ message: "Delete error" });
-    }
-    res.json({ success: true });
-  });
-});
-
-// Clear cart
-app.delete("/cart", (req, res) => {
-  const sql = "DELETE FROM cart_items";
-  db.query(sql, (err) => {
-    if (err) {
-      console.error("❌ Cart Clear Error:", err);
-      return res.status(500).json({ message: "Clear error" });
-    }
-    res.json({ success: true });
-  });
 });
 
 ///////////////////////////////////////////////////////////
-// ORDER APIs
+// 3. DATABASE INITIALIZATION
+///////////////////////////////////////////////////////////
+
+const initDB = () => {
+
+  const queries = [
+
+    `CREATE TABLE IF NOT EXISTS cart_items (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      price DECIMAL(10,2) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS orders (
+      order_id INT AUTO_INCREMENT PRIMARY KEY,
+      customer_name VARCHAR(255) NOT NULL,
+      phone VARCHAR(20) NOT NULL,
+      age INT,
+      table_number VARCHAR(10),
+      address TEXT,
+      city VARCHAR(100),
+      pincode VARCHAR(10),
+      order_type VARCHAR(50) DEFAULT 'cafe',
+      total_amount DECIMAL(10,2),
+      order_status ENUM('received','preparing','ready','delivered') DEFAULT 'received',
+      order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS order_items (
+      order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+      order_id INT,
+      item_name VARCHAR(255),
+      price DECIMAL(10,2),
+      quantity INT DEFAULT 1,
+      FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE
+    )`
+
+  ];
+
+  queries.forEach((query, index) => {
+
+    db.query(query, (err) => {
+
+      if (err) {
+        console.error(`❌ Error creating table ${index + 1}:`, err.message);
+      } else {
+        console.log(`✅ Table ${index + 1} ready`);
+      }
+
+    });
+
+  });
+
+};
+
+///////////////////////////////////////////////////////////
+// 4. CART APIs
+///////////////////////////////////////////////////////////
+
+app.post("/cart", (req, res) => {
+
+  const { name, price } = req.body;
+
+  const sql = "INSERT INTO cart_items (name, price) VALUES (?, ?)";
+
+  db.query(sql, [name, price], (err, result) => {
+
+    if (err) {
+      console.error("Add to cart failed", err);
+      return res.status(500).json({ success:false });
+    }
+
+    res.json({ success:true, id:result.insertId });
+
+  });
+
+});
+
+app.get("/cart", (req, res) => {
+
+  db.query("SELECT * FROM cart_items ORDER BY id DESC", (err, results) => {
+
+    if (err) {
+      console.error("Fetch cart failed", err);
+      return res.status(500).json([]);
+    }
+
+    res.json(results);
+
+  });
+
+});
+
+app.delete("/cart/:id", (req, res) => {
+
+  db.query("DELETE FROM cart_items WHERE id=?", [req.params.id], () => {
+
+    res.json({ success:true });
+
+  });
+
+});
+
+app.delete("/cart", (req, res) => {
+
+  db.query("DELETE FROM cart_items", () => {
+
+    res.json({ success:true });
+
+  });
+
+});
+
+///////////////////////////////////////////////////////////
+// 5. PLACE ORDER
 ///////////////////////////////////////////////////////////
 
 app.post("/place-order", (req, res) => {
-  const { customer_name, phone, table_number } = req.body;
 
-  if (!customer_name || !phone) {
-    return res.status(400).json({ message: "Customer details required" });
-  }
+  const { customer_name, phone, age, table_number, address, city, pincode, order_type } = req.body;
 
-  const cartQuery = "SELECT * FROM cart_items";
-
-  db.query(cartQuery, (err, cartItems) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Error reading cart" });
-    }
+  db.query("SELECT * FROM cart_items", (err, cartItems) => {
 
     if (cartItems.length === 0) {
-      return res.status(400).json({ message: "Cart is empty" });
+      return res.json({ success:false, message:"Cart empty" });
     }
 
-    let total = 0;
-    cartItems.forEach(item => {
-      total += Number(item.price);
-    });
+    let total = cartItems.reduce((sum, item) => sum + Number(item.price), 0);
 
-    const orderQuery = "INSERT INTO orders (customer_name, phone, table_number, total_amount, order_status) VALUES (?, ?, ?, ?, 'received')";
+    const orderSQL = `
+    INSERT INTO orders
+    (customer_name, phone, age, table_number, address, city, pincode, order_type, total_amount)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    db.query(orderQuery, [customer_name, phone, table_number, total], (err, orderResult) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Error creating order" });
-      }
+    db.query(orderSQL, [
+      customer_name,
+      phone,
+      age || null,
+      table_number || null,
+      address || null,
+      city || null,
+      pincode || null,
+      order_type || "cafe",
+      total
+    ], (err, result) => {
 
-      const orderId = orderResult.insertId;
-      const itemQuery = "INSERT INTO order_items (order_id, item_name, price) VALUES ?";
-      const values = cartItems.map(item => [orderId, item.name, item.price]);
+      const orderId = result.insertId;
 
-      db.query(itemQuery, [values], (err) => {
-        if (err) {
-          console.error(err);
-          return res.status(500).json({ message: "Error saving order items" });
+      const itemValues = cartItems.map(item => [orderId, item.name, item.price]);
+
+      db.query(
+        "INSERT INTO order_items (order_id,item_name,price) VALUES ?",
+        [itemValues],
+        () => {
+
+          db.query("DELETE FROM cart_items");
+
+          console.log(`📦 Order #${orderId} created`);
+
+          res.json({ success:true, orderId });
+
         }
+      );
 
-        db.query("DELETE FROM cart_items", () => {
-          res.json({
-            success: true,
-            message: "✅ Order placed successfully",
-            orderId: orderId
-          });
-        });
-      });
     });
+
   });
+
 });
 
 ///////////////////////////////////////////////////////////
-// KITCHEN DASHBOARD APIs
+// 6. KITCHEN DASHBOARD
 ///////////////////////////////////////////////////////////
 
-// Get all orders (SEQUENCE FIXED: Oldest at Top, Newest at Bottom)
 app.get("/orders", (req, res) => {
+
   const sql = `
-  SELECT 
-    orders.order_id,
-    orders.customer_name,
-    orders.phone,
-    orders.table_number,
-    orders.total_amount,
-    orders.order_status,
-    orders.order_time,
-    GROUP_CONCAT(order_items.item_name SEPARATOR ', ') AS items
-  FROM orders
-  LEFT JOIN order_items ON orders.order_id = order_items.order_id
-  GROUP BY orders.order_id
-  ORDER BY orders.order_time ASC
-  `;
+  SELECT o.*, GROUP_CONCAT(oi.item_name SEPARATOR ', ') AS items_list
+  FROM orders o
+  LEFT JOIN order_items oi ON o.order_id = oi.order_id
+  GROUP BY o.order_id
+  ORDER BY o.order_time DESC`;
 
   db.query(sql, (err, results) => {
-    if (err) {
-      console.error("❌ Orders Fetch Error:", err);
-      return res.status(500).json({ message: "Error fetching orders" });
-    }
+
     res.json(results);
+
   });
+
 });
 
-// Update order status
 app.put("/update-status/:id", (req, res) => {
+
   const { status } = req.body;
-  const orderId = req.params.id;
-  const sql = "UPDATE orders SET order_status=? WHERE order_id=?";
-  db.query(sql, [status, orderId], (err) => {
-    if (err) {
-      console.error("❌ Status Update Error:", err);
-      return res.status(500).json({ message: "Error updating status" });
-    }
-    res.json({ success: true });
-  });
+
+  db.query(
+    "UPDATE orders SET order_status=? WHERE order_id=?",
+    [status, req.params.id],
+    () => res.json({ success:true })
+  );
+
 });
 
-// DELETE ORDER (FIXED: Deletes items first to allow order deletion)
 app.delete("/delete-order/:id", (req, res) => {
-  const orderId = req.params.id;
 
-  // Step 1: Delete from order_items table
-  const sqlItems = "DELETE FROM order_items WHERE order_id=?";
-  db.query(sqlItems, [orderId], (err) => {
-    if (err) {
-      console.error("❌ Order Items Delete Error:", err);
-      return res.status(500).json({ message: "Delete error" });
-    }
+  db.query(
+    "DELETE FROM orders WHERE order_id=?",
+    [req.params.id],
+    () => res.json({ success:true })
+  );
 
-    // Step 2: Delete from orders table
-    const sqlOrder = "DELETE FROM orders WHERE order_id=?";
-    db.query(sqlOrder, [orderId], (err) => {
-      if (err) {
-        console.error("❌ Order Delete Error:", err);
-        return res.status(500).json({ message: "Delete error" });
-      }
-      res.json({ success: true });
-    });
-  });
 });
 
 ///////////////////////////////////////////////////////////
-// PAGE ROUTES
+// 7. PAGE ROUTES
 ///////////////////////////////////////////////////////////
 
-app.get("/", (req, res) => { res.sendFile(path.join(__dirname, "public", "index.html")); });
-app.get("/food", (req, res) => { res.sendFile(path.join(__dirname, "public", "food.html")); });
-app.get("/coffee-home", (req, res) => { res.sendFile(path.join(__dirname, "public", "coffee-home.html")); });
-app.get("/ready-to-eat", (req, res) => { res.sendFile(path.join(__dirname, "public", "ready-to-eat.html")); });
-app.get("/drinks", (req, res) => { res.sendFile(path.join(__dirname, "public", "drinks.html")); });
-app.get("/bestseller", (req, res) => { res.sendFile(path.join(__dirname, "public", "bestseller.html")); });
-app.get("/checkout", (req, res) => { res.sendFile(path.join(__dirname, "public", "checkout.html")); });
-app.get("/cart-page", (req, res) => { res.sendFile(path.join(__dirname, "public", "cart.html")); });
-app.get("/kitchen", (req, res) => { res.sendFile(path.join(__dirname, "public", "kitchen.html")); });
-app.get("/learn", (req, res) => { res.sendFile(path.join(__dirname, "public", "learn.html")); });
+app.get("/", (req,res)=>res.sendFile(path.join(__dirname,"public","index.html")));
 
-app.use((req, res) => {
-  res.status(404).send("❌ Page not found");
+app.get("/bestseller",(req,res)=>res.sendFile(path.join(__dirname,"public","bestseller.html")));
+app.get("/drinks",(req,res)=>res.sendFile(path.join(__dirname,"public","drinks.html")));
+app.get("/food",(req,res)=>res.sendFile(path.join(__dirname,"public","food.html")));
+app.get("/coffee-home",(req,res)=>res.sendFile(path.join(__dirname,"public","coffee-home.html")));
+app.get("/ready-to-eat",(req,res)=>res.sendFile(path.join(__dirname,"public","ready-to-eat.html")));
+
+app.get("/cart-page",(req,res)=>res.sendFile(path.join(__dirname,"public","cart.html")));
+
+app.get("/cafe-checkout",(req,res)=>res.sendFile(path.join(__dirname,"public","cafe-checkout.html")));
+app.get("/delivery-checkout",(req,res)=>res.sendFile(path.join(__dirname,"public","delivery-checkout.html")));
+
+app.get("/payment",(req,res)=>res.sendFile(path.join(__dirname,"public","payment.html")));
+app.get("/delivery-payment",(req,res)=>res.sendFile(path.join(__dirname,"public","delivery-payment.html")));
+
+app.get("/order-success",(req,res)=>res.sendFile(path.join(__dirname,"public","order-success.html")));
+app.get("/delivery-order-success",(req,res)=>res.sendFile(path.join(__dirname,"public","delivery-order-success.html")));
+
+app.get("/kitchen",(req,res)=>res.sendFile(path.join(__dirname,"public","kitchen.html")));
+
+///////////////////////////////////////////////////////////
+// 8. 404 HANDLER (MUST BE LAST)
+///////////////////////////////////////////////////////////
+
+app.use((req,res)=>{
+  res.status(404).send("<h1>404 - Coffee Corner Not Found</h1>");
 });
 
+///////////////////////////////////////////////////////////
+// 9. SERVER START
+///////////////////////////////////////////////////////////
 
-
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`✅ Server is officially live on port ${PORT}`);
+app.listen(PORT,'0.0.0.0',()=>{
+  console.log("------------------------------------------");
+  console.log(`☕ Coffee Corner Server Active on Port ${PORT}`);
+  console.log(`🏠 Home: http://localhost:${PORT}`);
+  console.log(`🍳 Kitchen: http://localhost:${PORT}/kitchen`);
+  console.log("------------------------------------------");
 });

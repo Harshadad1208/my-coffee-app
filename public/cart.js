@@ -1,13 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
   const cartCount = document.getElementById("cart-count");
-  const cartIcon = document.getElementById("cart-icon");
   const notification = document.getElementById("notification");
-  const checkoutBtn = document.getElementById("checkoutBtn"); // NEW
 
-  /* -----------------------------
-     Show Notification
-  ----------------------------- */
   function showNotification(message, type = "success") {
 
     if (!notification) return;
@@ -15,53 +10,28 @@ document.addEventListener("DOMContentLoaded", () => {
     notification.textContent = message;
 
     notification.style.background =
-      type === "success" ? "#4CAF50" : "#f44336";
+      type === "success" ? "#00754A" : "#e53935";
 
     notification.style.display = "block";
 
     setTimeout(() => {
       notification.style.display = "none";
-    }, 2000);
+    }, 2500);
+
   }
 
-  /* -----------------------------
-     Update Cart Count
-  ----------------------------- */
   function updateCartCount() {
 
     fetch("/cart")
       .then(res => res.json())
       .then(data => {
-
         if (cartCount) {
           cartCount.textContent = data.length;
         }
-
-        /* -----------------------------
-           Disable Checkout If Cart Empty
-        ----------------------------- */
-
-        if (checkoutBtn) {
-
-          if (data.length === 0) {
-
-            checkoutBtn.disabled = true;
-
-          } else {
-
-            checkoutBtn.disabled = false;
-
-          }
-
-        }
-
       })
-      .catch(err => console.error("Cart fetch error:", err));
-  }
+      .catch(err => console.error(err));
 
-  /* -----------------------------
-     Add Item To Cart
-  ----------------------------- */
+  }
 
   const buttons = document.querySelectorAll(".add-to-cart");
 
@@ -71,62 +41,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const card = button.closest(".menu-card");
 
-      if (!card) return;
-
       const name = card.dataset.name;
-      const price = parseFloat(card.dataset.price);
+      const price = card.dataset.price;
 
       fetch("/cart", {
-
         method: "POST",
-
         headers: {
           "Content-Type": "application/json"
         },
-
         body: JSON.stringify({
           name: name,
           price: price
         })
-
       })
       .then(res => res.json())
-      .then(data => {
+      .then(() => {
 
-        showNotification(name + " added to cart ☕", "success");
+        showNotification(name + " added to cart ☕");
 
         updateCartCount();
 
       })
-      .catch(err => {
+      .catch(() => {
 
-        console.error(err);
-
-        showNotification("Error adding item", "error");
+        showNotification("Failed to add item", "error");
 
       });
 
     });
 
   });
-
-  /* -----------------------------
-     Cart Icon Navigation
-  ----------------------------- */
-
-  if (cartIcon) {
-
-    cartIcon.addEventListener("click", () => {
-
-      window.location.href = "cart.html";
-
-    });
-
-  }
-
-  /* -----------------------------
-     Load Cart Count On Page Load
-  ----------------------------- */
 
   updateCartCount();
 

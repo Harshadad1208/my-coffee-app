@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delivery Payment - Coffee Corner</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9, #e8f5e9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .payment-card {
+            width: 420px;
+            background: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .payment-card h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2e7d32;
+        }
+
+        /* PAYMENT OPTION */
+        .payment-option {
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: 0.3s;
+            /* Ensures content inside stays left-aligned */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+        }
+
+        .payment-option:hover {
+            border-color: #4caf50;
+            background: #f1f8f4;
+        }
+
+        /* HEADER ROW - Fixed Alignment */
+        .option-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Forces alignment to the left */
+            width: 100%;
+            font-weight: 600;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .option-header input[type="radio"] {
+            width: auto; /* Prevents radio from stretching */
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* INPUTS */
+        select, input[type="text"] {
+            width: 100%;
+            box-sizing: border-box; /* Prevents padding from breaking width */
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-top: 5px;
+        }
+
+        .card-form {
+            display: none;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .pay-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #43a047, #2e7d32);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* SUCCESS NOTIFICATION */
+
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#4CAF50;
+color:white;
+padding:14px 24px;
+border-radius:8px;
+font-weight:600;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+opacity:0;
+transform:translateY(-20px);
+transition:all 0.4s ease;
+z-index:999;
+}
+
+.toast.show{
+opacity:1;
+transform:translateY(0);
+}
+    </style>
+</head>
+<body>
+
+<div class="payment-card">
+    <h2>🚚 Delivery Payment</h2>
+
+    <div class="payment-option">
+        <label class="option-header">
+            <input type="radio" name="pay" value="upi" checked>
+            <span>UPI Payment</span>
+        </label>
+        <select>
+            <option>Google Pay</option>
+            <option>PhonePe</option>
+            <option>Paytm</option>
+        </select>
+    </div>
+
+    <div class="payment-option">
+        <label class="option-header">
+            <input type="radio" name="pay" value="card">
+            <span>Card Payment</span>
+        </label>
+        <div class="card-form" id="cardForm">
+            <input type="text" placeholder="Card Holder Name" oninput="this.value=this.value.replace(/[^A-Za-z ]/g,'')">
+            <input type="text" placeholder="Card Number" maxlength="16" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            <div class="row">
+                <input type="text" placeholder="MMYY" maxlength="4" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                <input type="text" placeholder="CVV" maxlength="3" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-option">
+        <label class="option-header">
+            <input type="radio" name="pay" value="cash">
+            <span>Cash on Delivery</span>
+        </label>
+    </div>
+
+    <button class="pay-btn" onclick="payNow()">Confirm Payment</button>
+</div>
+
+<script>
+    const radios = document.querySelectorAll("input[name='pay']");
+    const cardForm = document.getElementById("cardForm");
+
+    radios.forEach(r => {
+        r.addEventListener("change", () => {
+            cardForm.style.display = (r.value === "card" && r.checked) ? "block" : "none";
+        });
+    });
+
+    function payNow(){
+
+const toast=document.getElementById("successToast");
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+toast.classList.remove("show");
+window.location.href="/order-success";
+},2000);
+
+}
+</script>
+
+
+<div id="successToast" class="toast">
+✅ Payment Successful
+</div>
+
+</body>
+</html>
